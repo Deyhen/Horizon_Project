@@ -14,7 +14,8 @@ const initialUser: User = {
 }
 
 const initialState: UserState = {
-    data: initialUser
+    data: initialUser,
+    isUserLoading: false
 }
 
 export const getUser = createAsyncThunk(
@@ -48,7 +49,11 @@ export const userSlice = createSlice({
       }},
     extraReducers: builder => {
         builder.addCase(getUser.fulfilled, (state, action) => {
+            state.isUserLoading = false
             state.data = action.payload?.data
+        })
+        builder.addCase(getUser.pending, state=> {
+            state.isUserLoading = true
         })
     }
 })

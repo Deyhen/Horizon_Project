@@ -19,6 +19,7 @@ export const MiniProfile = () => {
     const dispatch = useAppDispatch()
 
     const handleLogout = () => {
+        dispatch(logout());
         dispatch(cleanUser())
     }
 

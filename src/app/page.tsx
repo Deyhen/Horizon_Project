@@ -21,12 +21,13 @@ const news = [
   },
 ]
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className="">
       {news.map(item => (
         <NewsBlock title={item.title} id={item.id} content={item.content} img={item.img} key={item.id}/>
       ))}
+
     </div>
   );
 }

@@ -1,25 +1,20 @@
 'use client'
 
 import { checkAuth, login } from "@/src/store/auth"
-import { useAppDispatch } from "@/src/store/store"
+import { useAppDispatch, useAppSelector } from "@/src/store/store"
 import { useEffect, useState } from "react"
 
 export const Login = () => {
     const dispatch = useAppDispatch()
 
+
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-
-    useEffect(()=>{
-        if(localStorage.getItem('accessToken')){
-            dispatch(checkAuth())
-        }
-    }, [])
 
     const handleLogin = () =>{
         dispatch(login({username: username, password: password}))
     }
-    return (
+    return ( 
         <div className="relative bg-white md:rounded-[2rem] rounded-b-3xl flex justify-center items-center mx-4 font-bold">
             <span className="absolute left-0 right-0 mx-auto px-2 py-1 bg-element md:rounded-[2rem] rounded-t-3xl md:w-2/3 w-full text-center text-white -top-5">Авторизація</span>
             <form className="md:py-6 md:px-8 flex flex-col justify-center items-center pt-12 md:w-full">
@@ -37,4 +32,5 @@ export const Login = () => {
             </form>
         </div>
     )
+    
 }

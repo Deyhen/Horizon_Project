@@ -32,11 +32,11 @@ export const Header =() => {
                 <div className='md:flex hidden justify-center items-center col-span-1 col-start-1 row-start-2 flex-col self-start'>
                     <span className={`text-xl text-white ${textShadow} mb-4`}>ЗАВАНТАЖУЙ ЛАУНЧЕР!</span>
                     <button className={`${button}`}>
-                        <Image className={``} src={WindowsLogo} width={75} height={60} alt={"Woops"}/>
+                        <Image className={`w-20 h-16`} src={WindowsLogo}  alt={"Woops"}/>
                         <span className='text-orange w-full text-center'>Версія для<br/>Windows 32/64 bit</span>
                     </button>
                     <button className={`${button}`}>
-                        <Image className={``} src={LinuxAndAppleLogo} width={75} height={60} alt={"Woops"}/>
+                        <Image className={`w-20 h-16`} src={LinuxAndAppleLogo}  alt={"Woops"}/>
                         <span className='text-orange w-full text-center'>Версія для<br/>Linux / Mac O</span>
                     </button>
                 </div>

@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import store, { RootState, useAppDispatch } from "../store";
-import { cleanUser, getUser } from "../user";
+import store, { RootState } from "../store";
+import {  getUser } from "../user";
 import { AuthState } from "./types";
 import instance from "../api";
 
+
 const initialState: AuthState = {
     accessToken: '',
+    isTokenLoading: false
 }
 
 
@@ -43,8 +45,7 @@ export const logout = createAsyncThunk(
             console.log('user is not found');
             onErrorRedirect?.()
         }
-        const res = await instance.put(`/logout`)
-        store.dispatch(cleanUser())
+        const res = await instance.post(`/logout`)
         return res
     }
 )
@@ -53,12 +54,11 @@ export const checkAuth = createAsyncThunk(
     async () =>{
         try {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/refresh`, {withCredentials: true})
-
             localStorage.setItem('accessToken', res.data);
             store.dispatch(getUser())
         } catch (error) {
            console.log(error);
-        }
+        } 
     }
 )
 
@@ -67,6 +67,15 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState: initialState,
     reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(checkAuth.pending, state => {
+            state.isTokenLoading = true
+        })
+        builder.addCase(checkAuth.fulfilled, state => {
+            state.isTokenLoading = false
+        })
+    }
 })
+
 export default authSlice.reducer;
 export const selectAuthState = (state: RootState) => state.auth
