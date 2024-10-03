@@ -9,6 +9,10 @@ instance.interceptors.request.use(config => {
     config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
     return config
 })
+axios.interceptors.request.use(config => {
+    config.withCredentials = true;
+    return config
+})
 // instance.interceptors.response.use(async(res) => {
 //     const originalRequest = res.request
 //     console.log(res.status);

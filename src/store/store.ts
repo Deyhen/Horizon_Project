@@ -1,16 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { Middleware, combineReducers } from "redux";
-import auth from "./auth";
-import user from "./user";
-import users from "./users"
-import axios from "axios";
-
-export const reducer = combineReducers({
-  auth,
-  user,
-  users
-})
+import {reducer} from "./reducer"
 
 const customMiddleware: Middleware<{ state: RootState }, RootState> =
     store => next => action => {
@@ -18,13 +9,12 @@ const customMiddleware: Middleware<{ state: RootState }, RootState> =
     return { state: store.getState() };
 };
 
-
 const store = configureStore({
     reducer,
     middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).prepend(customMiddleware)
+    }).concat(customMiddleware)
   });
 
   

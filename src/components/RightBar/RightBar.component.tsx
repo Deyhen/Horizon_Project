@@ -4,30 +4,27 @@ import { useAppDispatch, useAppSelector } from "@/src/store/store"
 import { Login } from "./Login/login.component"
 import { MiniProfile } from "./MiniProfile/miniProfile.component"
 import { useEffect } from "react"
-import { checkAuth } from "@/src/store/auth"
+import { checkUser } from "@/src/store/user/actions"
 
 
 export const RightBar = () => {
 
     const user = useAppSelector(state => state.user.data)
-    const isTokenLoading = useAppSelector(state => state.auth.isTokenLoading)
-    const isUserLoading = useAppSelector(state => state.user.isUserLoading)
+    const loading = useAppSelector(state => state.user.loading)
+
     const dispatch = useAppDispatch()
     useEffect(()=>{
-        if(localStorage.getItem('accessToken') && !isTokenLoading && !isUserLoading){
-             dispatch(checkAuth())
-        }
+        dispatch(checkUser())
     }, [])
-
     return(
-        <div className="row-start-2 md:mt-40">
-{       (!isTokenLoading && !isUserLoading) ?
+        <div className="row-start-2 md:mt-40 mb-24">
+{       !loading ?
                (!user.id ?
-                <Login/>
+                    <Login/>
+                    :
+                    <MiniProfile/>)
                 :
-                <MiniProfile/>)
-                :
-                <h1>Loading</h1>
+                <div>Loading...</div>
 }
         </div>
     )

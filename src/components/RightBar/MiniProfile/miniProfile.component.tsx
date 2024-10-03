@@ -7,8 +7,8 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { LiaCoinsSolid } from "react-icons/lia";
 import { FaSackDollar } from "react-icons/fa6";
 import { useAppDispatch, useAppSelector } from "@/src/store/store";
-import { logout } from "@/src/store/auth";
-import { cleanUser } from "@/src/store/user";
+import { logout } from "@/src/store/user/actions";
+import Link from "next/link";
 
 
 export const MiniProfile = () => {
@@ -20,7 +20,6 @@ export const MiniProfile = () => {
 
     const handleLogout = () => {
         dispatch(logout());
-        dispatch(cleanUser())
     }
 
     return(
@@ -50,8 +49,8 @@ export const MiniProfile = () => {
                     </div>
                 </div>
                 <div className="flex flex-row md:flex-col md:text-xl text-xs">
-                    <div className={line}><RiUserLine className={lineImg} color="#fbbd8b"/> Особистий кабінет</div>
-                    <div className={line}><IoDiamondOutline className={lineImg} color="#fbbd8b"/> Поповнення балансу</div>
+                    <Link href={`/cabinet`}><div className={line}><RiUserLine className={lineImg} color="#fbbd8b"/> Особистий кабінет</div></Link>
+                    <Link href={`/cabinet/payment`}><div className={line}><IoDiamondOutline className={lineImg} color="#fbbd8b"/> Поповнення балансу</div></Link>
                     <div className={line}><BsCurrencyDollar className={lineImg} color="#fbbd8b"/> Магазин переваг</div>
                     <div className={line}><MdOutlineShoppingCart className={lineImg} color="#fbbd8b"/> Магазин ресурсів</div>
                 </div>

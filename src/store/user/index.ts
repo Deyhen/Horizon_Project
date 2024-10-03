@@ -1,64 +1,89 @@
-
-import  { RootState, } from "../store";
+import {createSlice, PayloadAction } from "@reduxjs/toolkit";
+import  { AxiosError } from "axios";
+import  { RootState } from "../store";
 import { User, UserState } from "./types";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import instance from "../api";
-
+import { checkUser, login, logout, signup } from "./actions";
 
 const initialUser: User = {
-    username: '',
     id: '',
+    username: '',
     email: '',
     password: '',
-    twoFA: false
+    isActivated: false,
+    role: 'user',
+    gameCurrency: 0,
+    donateCurrency: 0
 }
-
 const initialState: UserState = {
     data: initialUser,
-    isUserLoading: false
+    loading: true,
+    emailConfirmation: false,
+    loginError: '',
+    signupError: ''
 }
 
-export const getUser = createAsyncThunk(
-    'get user',
-    async (onErrorRedirect?: () => void) => {
-        try {
-            const accessToken = localStorage.getItem('accessToken')
-            
-            if(!accessToken){
-                console.log('user is not found');
-                onErrorRedirect?.()
-            }
-            const res = await instance.get(`/users/user`,
-            {headers: {
-                'Authorization': 'Bearer ' + accessToken
-            }})
-            return res
-        } catch (error) {
-            console.log(error);
-        }
-    }
-)
+
+
 export const userSlice = createSlice({
     name: 'user',
     initialState: initialState,
-    reducers: {
-        cleanUser: state => {
+    reducers: {},
+    extraReducers: (builder) => {
+        // builder.addCase(checkAuth.pending, state => {
+        //     state.isTokenLoading = true
+        // })
+        // builder.addCase(checkAuth.fulfilled, state => {
+        //     state.isTokenLoading = false
+        // })
+        builder.addCase(login.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(login.fulfilled, (state, action: PayloadAction<User>) => {
+            state.data = action.payload;
+            state.loading = false;
+            state.loginError = ''
+        });
+        builder.addCase(login.rejected, (state, action) => {
+            state.loading = false;
+            state.loginError = action.payload as string
+            
+        });
+        builder.addCase(signup.pending, (state) => {
+            state.loading = true
+        });
+        builder.addCase(signup.fulfilled, (state, action: PayloadAction<User>) => {
+            state.data = action.payload;
+            state.loading = false;
+            state.signupError = ''
+        });
+        builder.addCase(signup.rejected, (state, action) => {
+            state.loading = false;
+            state.signupError = action.payload as string
+        });
+        builder.addCase(logout.pending, (state) =>{
+            state.loading = true
+        })
+        builder.addCase(logout.fulfilled, (state) => {
+            localStorage.removeItem('accessToken')
+            state.loading = false
             state.data = initialUser;
-            localStorage.removeItem('accessToken');
-            // store.dispatch(logout())
-      }},
-    extraReducers: builder => {
-        builder.addCase(getUser.fulfilled, (state, action) => {
-            state.isUserLoading = false
-            state.data = action.payload?.data
+        });
+        builder.addCase(logout.rejected, (state, action) => {
+            state.loading = false
+        });
+        builder.addCase(checkUser.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(checkUser.fulfilled, (state, action: PayloadAction<User>) => {
+                state.data = action.payload;
+                state.loading = false;
+            }
+        );
+        builder.addCase(checkUser.rejected, (state, action) => {
+            state.loading = false
         })
-        builder.addCase(getUser.pending, state=> {
-            state.isUserLoading = true
-        })
-    }
+    },
 })
-export const {
-    cleanUser
-  } = userSlice.actions;
-export default userSlice.reducer;
+
 export const selectUserState = (state: RootState) => state.user
+export default userSlice.reducer;

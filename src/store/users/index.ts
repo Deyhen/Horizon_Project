@@ -1,24 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {  createSlice } from "@reduxjs/toolkit";
 import { UsersState } from "./types";
-import axios from "axios";
 import { RootState } from "../store";
-import instance from "../api";
+import { getUsers } from "./actions";
 
 const initialState: UsersState = {
     data: []
 }
-
-export const getUsers = createAsyncThunk(
-    'get users',
-    async () => {
-        try {
-            const res = await instance.get(`/users`)
-            return res
-        } catch (error) {
-            console.log(error);
-        }
-    }
-)
 
 export const usersSlice = createSlice({
     name: 'users',

@@ -1,33 +1,52 @@
-import Image from "next/image";
-import { NewsBlock } from "../components/NewsBlock/newsBlock.component";
-const news = [
-  {
-    id: '1',
-    content: 'Amet ex sunt aliqua cillum aliqua aliquip sint qui adipisicing reprehenderit proident sit commodo qui. Magna veniam aute anim ea non eu tempor non quis ut do dolor duis excepteur. Adipisicing mollit sunt duis tempor labore. Adipisicing enim laborum laboris excepteur Lorem sit id et consequat pariatur. Ad enim mollit dolore adipisicing velit cillum voluptate. Exercitation id in incididunt eiusmod sit minim id aute ipsum in. Aute et eiusmod eiusmod tempor reprehenderit in sunt commodo.',
-    title: 'Cillum do enim ipsum id ullamco ullamco ea eu sint.',
-    img: ''
-  },
-  {
-    id: '2',
-    content: 'Amet ex sunt aliqua cillum aliqua aliquip sint qui adipisicing reprehenderit proident sit commodo qui. Magna veniam aute anim ea non eu tempor non quis ut do dolor duis excepteur. Adipisicing mollit sunt duis tempor labore. Adipisicing enim laborum laboris excepteur Lorem sit id et consequat pariatur. Ad enim mollit dolore adipisicing velit cillum voluptate. Exercitation id in incididunt eiusmod sit minim id aute ipsum in. Aute et eiusmod eiusmod tempor reprehenderit in sunt commodo.',
-    title: 'Cillum do enim ipsum id ullamco ullamco ea eu sint.',
-    img: ''
-  },
-  {
-    id: '3',
-    content: 'Amet ex sunt aliqua cillum aliqua aliquip sint qui adipisicing reprehenderit proident sit commodo qui. Magna veniam aute anim ea non eu tempor non quis ut do dolor duis excepteur. Adipisicing mollit sunt duis tempor labore. Adipisicing enim laborum laboris excepteur Lorem sit id et consequat pariatur. Ad enim mollit dolore adipisicing velit cillum voluptate. Exercitation id in incididunt eiusmod sit minim id aute ipsum in. Aute et eiusmod eiusmod tempor reprehenderit in sunt commodo.',
-    title: 'Cillum do enim ipsum id ullamco ullamco ea eu sint.',
-    img: ''
-  },
-]
+'use client'
 
-export default async function Home() {
+import { useEffect, useMemo } from "react";
+import { PostBlock } from "../components/PagesBlocks/postBlock.component";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { getPosts } from "../store/posts/actions";
+import Link from "next/link";
+import { checkUser } from "../store/user/actions";
+
+
+
+const  Home = () => {
+  useEffect(()=>{
+    dispatch(checkUser())
+    dispatch(getPosts())
+}, [])
+
+  const loading = useAppSelector(state => state.posts.loading) 
+  const user = useAppSelector(state => state.user.data)
+  const dispatch = useAppDispatch()
+
+  const postsData = useAppSelector(state => state.posts.data)
+  const postsList = useMemo(() => {
+    return postsData.map(item => (
+      <PostBlock 
+        title={item.title} 
+        id={item.id} 
+        content={item.content} 
+        img={item.img} 
+        key={item.id}
+      />
+    ));
+  }, [postsData]);
+
   return (
     <div className="">
-      {news.map(item => (
-        <NewsBlock title={item.title} id={item.id} content={item.content} img={item.img} key={item.id}/>
-      ))}
+      {user.role == 'admin' &&
+        <Link href={'/posts/newPost'}>add new post</Link>
+      }
+      {loading ? (
+        <div>Loading...</div>
+      ) : postsData.length ? (
+        postsList
+      ) : (
+        <div>Posts list is empty</div>
+      )}
 
     </div>
   );
 }
+
+export default Home

@@ -1,11 +1,14 @@
+'use client'
+
 import RulesBlock from "@/src/components/RuleBlock/RuleBlock.component";
 
 
 
-export default function Rules(){
+
+ const Rules = () => {
     return(
         <div className={`bg-white relative flex flex-col md:rounded-[2rem] rounded-b-3xl py-12 shadow-2xl md:shadow-none shadow-element`}>
-            <h1 className={`absolute md:-top-5 -top-8  mx-auto left-0 right-0 md:w-1/3 md:min-w-fit w-full bg-[#e77f2a] font-bold text-white rounded-t-3xl px-4 py-1.5 text-center text-xl md:text-xl`}>
+            <h1 className={`absolute md:-top-5 -top-8  mx-auto left-0 right-0 md:w-1/3 md:min-w-fit w-full bg-[#e77f2a] font-bold text-white md:rounded-3xl rounded-t-3xl px-4 py-1.5 text-center text-xl md:text-xl`}>
                 Правила серверу
             </h1>
 
@@ -82,3 +85,5 @@ export default function Rules(){
         </div>
     )
 }
+
+export default Rules
