@@ -64,3 +64,79 @@ export const checkUser = createAsyncThunk(
 
     }
 )
+export const forgotPassword = createAsyncThunk(
+    'forgot password',
+    async (email: string, {rejectWithValue}) =>{
+
+        try {
+             await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/forgot-password`, {email})
+            return 
+        } catch (error) {
+            const e = error as AxiosError<any>
+            console.log(e); 
+            return rejectWithValue(e)
+        }
+
+    } 
+)
+export const checkResetToken = createAsyncThunk(
+    'check reset token',
+    async (token: string, {rejectWithValue}) =>{
+
+        try {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password/chek/${token}`)
+            console.log(2);
+            return res
+        } catch (error) {
+            console.log(1);
+            const e = error as AxiosError<any>
+            console.log(e);
+            return rejectWithValue(e)
+        }
+
+    }
+)
+
+export const resetPassword = createAsyncThunk(
+    'reset password',
+    async ({password, token}: {password: string, token: string}, {rejectWithValue}) =>{
+
+        try {
+            const res = (await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password/`, {password, token})) as AxiosResponse<UserResponse>
+            localStorage.setItem('accessToken', res.data.accessToken);
+
+            return res.data.user
+        } catch (error) {
+            const e = error as AxiosError<any>
+            console.log(e);
+            return rejectWithValue(e)
+        }
+
+    }
+)
+export const changeSkin = createAsyncThunk(
+    'change skin',
+    async (formData: FormData, {rejectWithValue}) => {
+        try {
+            const res = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/change-skin`, formData, {headers: {
+                'Content-Type': 'multipart/form-data'
+              }})
+            return res
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+)
+export const changeAvatar = createAsyncThunk(
+    'change avatar',
+    async (formData: FormData, {rejectWithValue}) => {
+        try {
+            const res = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/change-avatar`, formData, {headers: {
+                'Content-Type': 'multipart/form-data'
+              }})
+            return res
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+)

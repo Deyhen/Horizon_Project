@@ -6,7 +6,6 @@ export interface UserState {
     loading: boolean,
     loginError: string,
     signupError: string,
-    emailConfirmation: boolean;
 }
 export interface User {
   id: string,
@@ -16,7 +15,10 @@ export interface User {
   isActivated: boolean,
   role: string,
   donateCurrency: number,
-  gameCurrency: number
+  gameCurrency: number,
+  capePath: string,
+  skinPath: string,
+  avatarPath: string
 }
 export interface UserResponse{
   user: User,

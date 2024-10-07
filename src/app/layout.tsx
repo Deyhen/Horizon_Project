@@ -1,11 +1,12 @@
 
-import { Footer } from "../components/Footer/Footer.component";
-import { Header } from "../components/Header/Header.component";
-import { RightBar } from "../components/RightBar/RightBar.component";
+import { Footer } from "../components/Layout/Footer/Footer.component";
+
 import StoreProvider from "../components/StoreProvider/storeProvider.component";
 import {GoogleTagManager, GoogleAnalytics} from "@next/third-parties/google"
 import "./globals.css";
 import 'tailwindcss/tailwind.css'
+import { Header } from "../components/Layout/Header/Header.component";
+import { RightBar } from "../components/Layout/RightBar/RightBar.component";
 
 
  const RootLayout = ({
@@ -25,7 +26,7 @@ import 'tailwindcss/tailwind.css'
             {/*<!-- End Google Tag Manager (noscript) -->*/}
 
               <Header />
-                <main className="md:mt-40 row-start-3 md:row-start-2 col-start-1 col-span-2 md:col-span-1 w-full px-4 flex justify-center items-center">
+                <main className="md:mt-40 row-start-3 md:row-start-2 col-start-1 col-span-2 md:col-span-1 w-full px-4 flex justify-center items-start">
                   {children}
                 </main>
                   <RightBar/>

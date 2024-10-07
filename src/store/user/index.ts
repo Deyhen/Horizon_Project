@@ -2,7 +2,7 @@ import {createSlice, PayloadAction } from "@reduxjs/toolkit";
 import  { AxiosError } from "axios";
 import  { RootState } from "../store";
 import { User, UserState } from "./types";
-import { checkUser, login, logout, signup } from "./actions";
+import { changeAvatar, changeSkin, checkUser, login, logout, resetPassword, signup } from "./actions";
 
 const initialUser: User = {
     id: '',
@@ -12,12 +12,14 @@ const initialUser: User = {
     isActivated: false,
     role: 'user',
     gameCurrency: 0,
-    donateCurrency: 0
+    donateCurrency: 0,
+    capePath: '',
+    skinPath: '',
+    avatarPath: ''
 }
 const initialState: UserState = {
     data: initialUser,
     loading: true,
-    emailConfirmation: false,
     loginError: '',
     signupError: ''
 }
@@ -81,6 +83,19 @@ export const userSlice = createSlice({
         );
         builder.addCase(checkUser.rejected, (state, action) => {
             state.loading = false
+        });
+        builder.addCase(resetPassword.fulfilled, (state, action: PayloadAction<User>) => {
+            state.data = action.payload;
+        }
+        );
+        builder.addCase(resetPassword.rejected, (state, action) => {
+            console.log(action.error);
+        })
+        builder.addCase(changeSkin.fulfilled, (state, action) => {
+            state.data = action.payload.data as User
+        })
+        builder.addCase(changeAvatar.fulfilled, (state, action) => {
+            state.data = action.payload.data as User
         })
     },
 })

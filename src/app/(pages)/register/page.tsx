@@ -23,7 +23,7 @@ const Registration = () => {
 
     const user = useAppSelector(state => state.user.data)
 
-    const inputClass = 'bg-orange text-white rounded-lg my-2 w-full h-8 placeholder:text-white p-1 px-2 focus:outline-1 outline-element'
+    const inputClass = 'bg-orange text-white rounded-lg my-2 w-full h-8 placeholder:text-white p-1 px-2 focus:outline-1 outline-element '
 
     const onSubmit = ({username, password, email} : {username: string, password: string, email: string}) => {
         dispatch(signup({username: username, password: password, email: email})).unwrap()

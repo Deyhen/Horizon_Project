@@ -1,25 +1,49 @@
 'use client'
 
-import { login } from "@/src/store/user/actions"
-import { useAppDispatch, useAppSelector,  } from "@/src/store/store"
+import { forgotPassword, login } from "@/src/store/user/actions"
+import { useAppDispatch} from "@/src/store/store"
 import { Form, Formik } from "formik"
 import {object, string} from 'yup'
-import { MyInput } from "../../Custom/input/myInput.component"
+
 import Link from "next/link"
 import Swal from "sweetalert2"
+import styles from "./styles.module.css"
+import { MyInput } from "@/src/components/Custom/input/myInput.component"
 
 interface Values {
     username: string,
     password: string
   }
 
-
-
 export const Login = () => {
     const dispatch = useAppDispatch()
     const inputClass = 'bg-orange text-white rounded-lg my-2 w-full h-8 placeholder:text-white p-1 px-2 focus:outline-1 outline-element'
 
-    const loginError = useAppSelector(state => state.user.loginError)
+    const handleForgotPassword = async () => {
+
+        const { value: email } = await Swal.fire({
+            title: "Уведіть ваш email",
+            input: "email",
+            inputPlaceholder: "example@email.com",
+            color: '#e77f2a',
+            inputAutoFocus: true,
+            confirmButtonColor: '#fbbd8b',
+            customClass: {
+                input: `${styles.emailInput}`,
+              }
+          });
+          if (email) {
+            dispatch(forgotPassword(email)).unwrap()
+            .then(() => {
+                Swal.fire({
+                    title: 'Лист відправлено вам на пошту',
+                    confirmButtonColor: '#e77f2a',
+                    icon: 'success',
+                    iconColor: "#e77f2a"
+                })
+            })
+          }
+    }
 
     const LoginSchema = object().shape({
         username: string()
@@ -52,6 +76,7 @@ export const Login = () => {
                         .then(async (originalPromiseResult) => {
                         })
                         .catch((rejectedValueOrSerializedError) => {
+                            console.log(rejectedValueOrSerializedError);
                             Swal.fire({
                                 title: rejectedValueOrSerializedError,
                                 confirmButtonColor: '#e77f2a',
@@ -65,7 +90,7 @@ export const Login = () => {
                     <Form className="md:py-6 md:px-8 flex flex-col justify-center items-center pt-12 md:w-full">
                         <MyInput inputStyle={inputClass} type="text" placeholder="username" name="username"/>
                         <MyInput inputStyle={inputClass} type="password" placeholder="password" name="password" label=""/>
-                        <span className="text-gray-300 underline text-sm mb-2 text-end w-full  cursor-pointer">Забули пароль?</span>
+                        <span className="text-gray-300 underline text-sm mb-2 text-end w-full  cursor-pointer" onClick={handleForgotPassword}>Забули пароль?</span>
                         <div className="flex justify-center items-center mb-4 w-full">
                             <Link href="/register"  className="mx-4 my-2 bg-gray-300 p-2 rounded-[2rem] min-w-32 text-center">
                                 Регістрація

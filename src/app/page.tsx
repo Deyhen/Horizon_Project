@@ -11,7 +11,6 @@ import { checkUser } from "../store/user/actions";
 
 const  Home = () => {
   useEffect(()=>{
-    dispatch(checkUser())
     dispatch(getPosts())
 }, [])
 
@@ -35,7 +34,7 @@ const  Home = () => {
   return (
     <div className="">
       {user.role == 'admin' &&
-        <Link href={'/posts/newPost'}>add new post</Link>
+        <Link href={'/posts/new-post'}>add new post</Link>
       }
       {loading ? (
         <div>Loading...</div>
