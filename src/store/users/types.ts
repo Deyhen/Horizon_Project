@@ -1,5 +1,5 @@
-import { User } from "../user/types";
+import { User } from '../user/types';
 
 export interface UsersState {
-    data: User[]
+  data: User[];
 }

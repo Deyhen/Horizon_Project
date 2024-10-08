@@ -1,26 +1,21 @@
-import {  createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
-import { ServersState } from "./types";
-import { getGameServers } from "./actions";
-
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../store';
+import { ServersState } from './types';
+import { getGameServers } from './actions';
 
 const initialState: ServersState = {
-    data: []
-
-}
+  data: [],
+};
 
 export const serversSlice = createSlice({
-    name: 'servers',
-    initialState: initialState,
-    reducers: {
-        
-    },
-    extraReducers: builder => {
-        builder.addCase(getGameServers.fulfilled, (state, action) => {
-            state.data = action.payload?.data
-        })
-    }
-       
-})
+  name: 'servers',
+  initialState: initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getGameServers.fulfilled, (state, action) => {
+      state.data = action.payload?.data;
+    });
+  },
+});
 export default serversSlice.reducer;
-export const selectServersState = (state: RootState) => state.servers
+export const selectServersState = (state: RootState) => state.servers;

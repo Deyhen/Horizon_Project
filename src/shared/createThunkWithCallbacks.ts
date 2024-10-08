@@ -1,14 +1,15 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export interface ThunkCallbacks<T> {
   onSuccess?: (result: T) => void;
   onReject?: () => void;
 }
 
-export function createThunkWithCallbacks<
-  Payload extends ThunkCallbacks<Result>,
-  Result = any
->(type: string, asyncFn: (payload: Payload) => Promise<Result>) {
+export function createThunkWithCallbacks<Payload extends ThunkCallbacks<Result>, Result = any>(
+  type: string,
+  asyncFn: (payload: Payload) => Promise<Result>,
+) {
   return createAsyncThunk(type, async (payload: Payload) => {
     const { onSuccess, onReject } = payload;
 

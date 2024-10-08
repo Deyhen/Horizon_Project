@@ -1,6 +1,6 @@
-.emailInput{
-    outline: none;
+.emailInput {
+  outline: none;
 }
-.emailInput:focus{
-    outline: solid #e77f2a;
+.emailInput:focus {
+  outline: solid #e77f2a;
 }

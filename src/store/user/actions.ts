@@ -1,142 +1,180 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios, { AxiosError, AxiosResponse } from "axios";
-// import store  from "../store";
-// import {  getUser } from "../user";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { LoginArgs, RegistrationArgs, UserResponse } from './types';
 
-import instance from "../../shared/api";
-import { createThunkWithCallbacks } from "@/src/shared/createThunkWithCallbacks";
-import { LoginArgs, RegistrationArgs, UserResponse } from "./types";
+export const login = createAsyncThunk('login', async (data: LoginArgs, { rejectWithValue }) => {
+  try {
+    const res = (await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/login`, {
+      ...data,
+    })) as AxiosResponse<UserResponse>;
+    localStorage.setItem('accessToken', res.data.accessToken);
 
-export const login = createAsyncThunk(
-    'login',
-    async (data: LoginArgs, {rejectWithValue}) => {
-        try {
-            const res = (await instance.post(`/login`, { ...data})) as AxiosResponse<UserResponse>
-            localStorage.setItem('accessToken', res.data.accessToken);
-            
-            return res.data.user
-        } catch (error) {
-            const e = error as AxiosError<any>
-            console.log(e);
-            return rejectWithValue(e.response?.data.message)
-        }
-    }
-)
+    return res.data.user;
+  } catch (error) {
+    const e = error as AxiosError<any>;
+    console.log(e);
+    return rejectWithValue(e.response?.data.message);
+  }
+});
 
 export const signup = createAsyncThunk(
-    'signup',
-    async (data: RegistrationArgs, {rejectWithValue}) => {
-        try{
-        const res = await instance.post('/registration', {...data});
-        localStorage.setItem('accessToken', res.data.token);
-        return res.data.user
-        } catch (error) {
-            const e = error as AxiosError<any>
-            console.log(e);
-            return rejectWithValue(e.response?.data.message)
-        }
+  'signup',
+  async (data: RegistrationArgs, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/registration`, {
+        ...data,
+      });
+      localStorage.setItem('accessToken', res.data.accessToken);
+      return res.data.user;
+    } catch (error) {
+      const e = error as AxiosError<any>;
+      console.log(e);
+      return rejectWithValue(e.response?.data.message);
     }
-)
-export const logout = createAsyncThunk(
-    'logout',
-    async (arg, {rejectWithValue}) => {
-        try {
-            const res = await instance.post(`/logout`, )
-            return res
-        } catch (error) {
-            return rejectWithValue(error)
-        }
-    }
-)
+  },
+);
+export const logout = createAsyncThunk('logout', async (arg, { rejectWithValue }) => {
+  try {
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/logout`);
+    return res;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});
 export const checkUser = createAsyncThunk(
-    'check authorization',
-    async (arg, {rejectWithValue}) =>{
-
-        try {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/refresh`, {withCredentials: true})
-            localStorage.setItem('accessToken', res.data.token);
-            return res.data.user
-        } catch (error) {
-            const e = error as AxiosError<any>
-            console.log(e);
-            return rejectWithValue(e)
-        }
-
+  'check authorization',
+  async (arg, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/refresh`);
+      localStorage.setItem('accessToken', res.data.accessToken);
+      return res.data.user;
+    } catch (error) {
+      const e = error as AxiosError<any>;
+      console.log(e);
+      return rejectWithValue(e);
     }
-)
+  },
+);
 export const forgotPassword = createAsyncThunk(
-    'forgot password',
-    async (email: string, {rejectWithValue}) =>{
-
-        try {
-             await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/forgot-password`, {email})
-            return 
-        } catch (error) {
-            const e = error as AxiosError<any>
-            console.log(e); 
-            return rejectWithValue(e)
-        }
-
-    } 
-)
-export const checkResetToken = createAsyncThunk(
-    'check reset token',
-    async (token: string, {rejectWithValue}) =>{
-
-        try {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password/chek/${token}`)
-            console.log(2);
-            return res
-        } catch (error) {
-            console.log(1);
-            const e = error as AxiosError<any>
-            console.log(e);
-            return rejectWithValue(e)
-        }
-
+  'forgot password',
+  async (email: string, { rejectWithValue }) => {
+    try {
+      await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/forgot-password`, { email });
+      return;
+    } catch (error) {
+      const e = error as AxiosError<any>;
+      console.log(e);
+      return rejectWithValue(e);
     }
-)
+  },
+);
+export const checkResetToken = createAsyncThunk(
+  'check reset token',
+  async (token: string, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password/chek/${token}`,
+      );
+      return res;
+    } catch (error) {
+      const e = error as AxiosError<any>;
+      console.log(e);
+      return rejectWithValue(e);
+    }
+  },
+);
 
 export const resetPassword = createAsyncThunk(
-    'reset password',
-    async ({password, token}: {password: string, token: string}, {rejectWithValue}) =>{
+  'reset password',
+  async ({ password, token }: { password: string; token: string }, { rejectWithValue }) => {
+    try {
+      const res = (await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password/`, {
+        password,
+        token,
+      })) as AxiosResponse<UserResponse>;
+      localStorage.setItem('accessToken', res.data.accessToken);
 
-        try {
-            const res = (await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password/`, {password, token})) as AxiosResponse<UserResponse>
-            localStorage.setItem('accessToken', res.data.accessToken);
-
-            return res.data.user
-        } catch (error) {
-            const e = error as AxiosError<any>
-            console.log(e);
-            return rejectWithValue(e)
-        }
-
+      return res.data.user;
+    } catch (error) {
+      const e = error as AxiosError<any>;
+      console.log(e);
+      return rejectWithValue(e);
     }
-)
+  },
+);
 export const changeSkin = createAsyncThunk(
-    'change skin',
-    async (formData: FormData, {rejectWithValue}) => {
-        try {
-            const res = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/change-skin`, formData, {headers: {
-                'Content-Type': 'multipart/form-data'
-              }})
-            return res
-        } catch (error) {
-            return rejectWithValue(error);
-        }
+  'change skin',
+  async (formData: FormData, { rejectWithValue }) => {
+    try {
+      const res = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/change-skin`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res;
+    } catch (error) {
+      return rejectWithValue(error);
     }
-)
+  },
+);
 export const changeAvatar = createAsyncThunk(
-    'change avatar',
-    async (formData: FormData, {rejectWithValue}) => {
-        try {
-            const res = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/change-avatar`, formData, {headers: {
-                'Content-Type': 'multipart/form-data'
-              }})
-            return res
-        } catch (error) {
-            return rejectWithValue(error);
-        }
+  'change avatar',
+  async (formData: FormData, { rejectWithValue }) => {
+    try {
+      const res = await axios.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/change-avatar`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+      return res;
+    } catch (error) {
+      return rejectWithValue(error);
     }
-)
+  },
+);
+export const changeCape = createAsyncThunk(
+  'change cape',
+  async (formData: FormData, { rejectWithValue }) => {
+    try {
+      const res = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/change-cape`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return res;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
+export const activateEmail = createAsyncThunk(
+  'send email activation code',
+  async (args, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/activate-email`);
+      return res;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
+export const activatePromocode = createAsyncThunk(
+  'activate promocode',
+  async (promocode: string, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/activate-promocode/${promocode}`,
+      );
+
+      return res;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  },
+);

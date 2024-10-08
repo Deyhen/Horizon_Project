@@ -1,25 +1,45 @@
+import { useState } from 'react';
 
+export default function RulesBlock({
+  options,
+  themeIndex,
+  theme,
+}: {
+  options: string[];
+  themeIndex: string;
+  theme: string;
+}) {
+  const tooMuchOptions = options.length > 5;
 
-import { useState } from "react"
+  const [showMore, setShowMore] = useState(!tooMuchOptions);
 
-export default function RulesBlock({options, themeIndex, theme}: {options: string[], themeIndex: string, theme: string}){
-    const tooMuchOptions = options.length > 5
+  return (
+    <div className="flex w-full flex-col items-center p-6 px-12 md:items-start">
+      <h2 className={`mb-2 ml-2 text-xl font-semibold`}>{`${themeIndex}. ${theme}`}</h2>
+      {!showMore
+        ? options
+            .slice(0, 5)
+            .map((option, optionIndex) => (
+              <span
+                className={``}
+                key={optionIndex}
+              >{`${themeIndex}.${optionIndex + 1} ${option}`}</span>
+            ))
+        : options.map((option, optionIndex) => (
+            <span
+              className={``}
+              key={optionIndex}
+            >{`${themeIndex}.${optionIndex + 1} ${option}`}</span>
+          ))}
 
-    const [showMore, setShowMore] = useState(!tooMuchOptions)
-
-    return(
-        <div className=" p-6 flex flex-col w-full md:items-start items-center px-12"> 
-            <h2 className={`ml-2 mb-2 font-semibold text-xl`}>{`${themeIndex}. ${theme}`}</h2> 
-             {!showMore?
-             options.slice(0, 5).map((option, optionIndex) => (
-                <span className={``} key={optionIndex}>{`${themeIndex}.${optionIndex + 1} ${option}`}</span>
-             )) 
-            : 
-            options.map((option, optionIndex) => (
-                <span className={``} key={optionIndex}>{`${themeIndex}.${optionIndex + 1} ${option}`}</span>
-            ))} 
-
-            {tooMuchOptions && <div onClick={() => setShowMore(!showMore)} className={`hover:cursor-pointer font-semibold ml-2 mt-2`}>{!showMore ? `Відкрити повністю >>` : `Сховати <<`}</div>}
+      {tooMuchOptions && (
+        <div
+          onClick={() => setShowMore(!showMore)}
+          className={`ml-2 mt-2 font-semibold hover:cursor-pointer`}
+        >
+          {!showMore ? `Відкрити повністю >>` : `Сховати <<`}
         </div>
-    )
+      )}
+    </div>
+  );
 }
