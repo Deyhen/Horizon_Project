@@ -1,7 +1,7 @@
 'use client';
 
 import { useAppDispatch, useAppSelector } from '@/src/store/store';
-import { activateEmail, activatePromocode } from '@/src/store/user/actions';
+import { activateEmail, activatePromocode, changePassword, changeUsername } from '@/src/store/user/actions';
 import { useState } from 'react';
 
 const Opportunities = () => {
@@ -9,24 +9,34 @@ const Opportunities = () => {
   const user = useAppSelector((state) => state.user.data);
 
   const [promocode, setPromocode] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [newUsername, setNewUsername] = useState('')
 
   const handleActivateEmail = () => {
-    console.log(localStorage.getItem('accessToken'));
     dispatch(activateEmail());
-    console.log(1);
-  };
+  }
   const handleSendPromocode = () => {
     dispatch(activatePromocode(promocode));
   };
+  const handleSetNewUsername =() => {
+    dispatch(changeUsername(newUsername))
+  }
+  const handleSetNewPassword = () => {
+    dispatch(changePassword({newPassword: newPassword, currentPassword: currentPassword}))
+  }
   return (
     <div>
       <div>
         Change username
-        <input type="text" />
+        <input type="text" value={newUsername} onChange={(e) => setNewUsername(e.target.value)}/>
+        <button onClick={handleSetNewUsername}>send</button>
       </div>
       <div>
         Change pasword
-        <input type="text" />
+        <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)}/>
+        <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
+        <button onClick={handleSetNewPassword}>send</button>
       </div>
       {!user.isActivated && <button onClick={handleActivateEmail}>Activate email</button>}
       <div>

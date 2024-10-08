@@ -4,6 +4,11 @@ const instance = axios.create({
   withCredentials: true,
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });
+instance.interceptors.request.use((config) => {
+  config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
+
+  return config;
+});
 
 axios.interceptors.request.use((config) => {
   config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
@@ -21,7 +26,7 @@ axios.interceptors.request.use((config) => {
 //     console.log(res.status);
 //     if(res.status == 401 ){
 //         originalRequest.isRetry = true
-//         try {
+//         try { 
 //             const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/refresh`, {withCredentials: true})
 //             console.log(response);
 //             localStorage.setItem('accessToken', response.data.accessToken)

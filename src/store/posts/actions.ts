@@ -1,3 +1,4 @@
+import instance from '@/src/shared/api';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -26,11 +27,7 @@ export const createPost = createAsyncThunk(
   'create post',
   async (formData: FormData, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/posts`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const res = await instance.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/posts`, formData);
       return res;
     } catch (error) {
       return rejectWithValue(error);

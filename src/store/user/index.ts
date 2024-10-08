@@ -8,6 +8,7 @@ import {
   changeCape,
   changeSkin,
   checkUser,
+  getUser,
   login,
   logout,
   resetPassword,
@@ -39,12 +40,6 @@ export const userSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // builder.addCase(checkAuth.pending, state => {
-    //     state.isTokenLoading = true
-    // })
-    // builder.addCase(checkAuth.fulfilled, state => {
-    //     state.isTokenLoading = false
-    // })
     builder.addCase(login.pending, (state) => {
       state.loading = true;
     });
@@ -96,13 +91,7 @@ export const userSlice = createSlice({
     builder.addCase(resetPassword.rejected, (state, action) => {
       console.log(action.error);
     });
-    builder.addCase(changeSkin.fulfilled, (state, action) => {
-      state.data = action.payload.data as User;
-    });
-    builder.addCase(changeAvatar.fulfilled, (state, action) => {
-      state.data = action.payload.data as User;
-    });
-    builder.addCase(changeCape.fulfilled, (state, action) => {
+    builder.addCase(getUser.fulfilled, (state, action) => {
       state.data = action.payload.data as User;
     });
   },

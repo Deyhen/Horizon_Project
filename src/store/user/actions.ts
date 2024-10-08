@@ -2,6 +2,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { LoginArgs, RegistrationArgs, UserResponse } from './types';
+import instance from '@/src/shared/api';
+
+export const getUser = createAsyncThunk(
+    'get user',
+    async (args, {rejectWithValue}) => {
+        try {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/user`)
+            return res
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+)
 
 export const login = createAsyncThunk('login', async (data: LoginArgs, { rejectWithValue }) => {
   try {
@@ -52,7 +65,7 @@ export const checkUser = createAsyncThunk(
     } catch (error) {
       const e = error as AxiosError<any>;
       console.log(e);
-      return rejectWithValue(e);
+      return rejectWithValue(e.response?.data.message);
     }
   },
 );
@@ -65,7 +78,7 @@ export const forgotPassword = createAsyncThunk(
     } catch (error) {
       const e = error as AxiosError<any>;
       console.log(e);
-      return rejectWithValue(e);
+      return rejectWithValue(e.response?.data.message);
     }
   },
 );
@@ -80,7 +93,7 @@ export const checkResetToken = createAsyncThunk(
     } catch (error) {
       const e = error as AxiosError<any>;
       console.log(e);
-      return rejectWithValue(e);
+      return rejectWithValue(e.response?.data.message);
     }
   },
 );
@@ -99,30 +112,29 @@ export const resetPassword = createAsyncThunk(
     } catch (error) {
       const e = error as AxiosError<any>;
       console.log(e);
-      return rejectWithValue(e);
+      return rejectWithValue(e.response?.data.message);
     }
   },
 );
 export const changeSkin = createAsyncThunk(
   'change skin',
-  async (formData: FormData, { rejectWithValue }) => {
+  async (formData: FormData, { rejectWithValue,dispatch }) => {
     try {
-      const res = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/change-skin`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const res = await instance.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/change-skin`, formData);
+      dispatch(getUser())
       return res;
     } catch (error) {
-      return rejectWithValue(error);
+        const e = error as AxiosError<any>;
+        console.log(e);
+      return rejectWithValue(e.response?.data.message);
     }
   },
 );
 export const changeAvatar = createAsyncThunk(
   'change avatar',
-  async (formData: FormData, { rejectWithValue }) => {
+  async (formData: FormData, { rejectWithValue,dispatch }) => {
     try {
-      const res = await axios.put(
+      const res = await instance.put(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/change-avatar`,
         formData,
         {
@@ -131,24 +143,30 @@ export const changeAvatar = createAsyncThunk(
           },
         },
       );
+      dispatch(getUser())
       return res;
     } catch (error) {
-      return rejectWithValue(error);
+        const e = error as AxiosError<any>;
+        console.log(e);
+      return rejectWithValue(e.response?.data.message);
     }
   },
 );
 export const changeCape = createAsyncThunk(
   'change cape',
-  async (formData: FormData, { rejectWithValue }) => {
+  async (formData: FormData, { rejectWithValue,dispatch }) => {
     try {
-      const res = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/change-cape`, formData, {
+      const res = await instance.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/change-cape`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+      dispatch(getUser())
       return res;
     } catch (error) {
-      return rejectWithValue(error);
+        const e = error as AxiosError<any>;
+        console.log(e);
+      return rejectWithValue(e.response?.data.message);
     }
   },
 );
@@ -159,22 +177,55 @@ export const activateEmail = createAsyncThunk(
       const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/activate-email`);
       return res;
     } catch (error) {
-      return rejectWithValue(error);
+        const e = error as AxiosError<any>;
+        console.log(e);
+      return rejectWithValue(e.response?.data.message);
     }
   },
 );
 export const activatePromocode = createAsyncThunk(
   'activate promocode',
-  async (promocode: string, { rejectWithValue }) => {
+  async (promocode: string, { rejectWithValue, dispatch }) => {
     try {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/activate-promocode/${promocode}`,
       );
-
+      dispatch(getUser())
       return res;
     } catch (error) {
-      console.log(error);
-      return rejectWithValue(error);
+        const e = error as AxiosError<any>;
+        console.log(e);
+      return rejectWithValue(e.response?.data.message);
     }
   },
 );
+export const changeUsername = createAsyncThunk(
+    'set new username',
+    async (newUsername: string, { rejectWithValue, dispatch }) => {
+      try {
+        const res = await axios.put(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/change-username`, {newUsername});
+        dispatch(getUser())
+        return res;
+      } catch (error) {
+          const e = error as AxiosError<any>;
+          console.log(e);
+        return rejectWithValue(e.response?.data.message);
+      }
+    },
+  );
+  export const changePassword = createAsyncThunk(
+    'set new password',
+    async ({currentPassword, newPassword}:{currentPassword: string, newPassword: string}, { rejectWithValue, dispatch }) => {
+      try {
+        const res = await axios.put(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/change-password`, {currentPassword, newPassword});
+        dispatch(getUser())
+        return res;
+      } catch (error) {
+          const e = error as AxiosError<any>;
+          console.log(e);
+        return rejectWithValue(e.response?.data.message);
+      }
+    },
+  );
