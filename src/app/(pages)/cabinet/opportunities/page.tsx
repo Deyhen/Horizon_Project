@@ -1,5 +1,6 @@
 'use client';
 
+import { AddNewPromocodes } from '@/src/components/AddNewPromocodes/addNewPromocodes.component';
 import { useAppDispatch, useAppSelector } from '@/src/store/store';
 import { activateEmail, activatePromocode, changePassword, changeUsername } from '@/src/store/user/actions';
 import { useState } from 'react';
@@ -44,6 +45,9 @@ const Opportunities = () => {
         <input type="text" value={promocode} onChange={(e) => setPromocode(e.target.value)} />
         <button onClick={handleSendPromocode}>Send</button>
       </div>
+      {user.role === 'admin' &&
+        <AddNewPromocodes/>
+      }
     </div>
   );
 };

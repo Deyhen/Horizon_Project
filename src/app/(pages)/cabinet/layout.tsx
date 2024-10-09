@@ -10,7 +10,7 @@ const CabinetLayout = ({
 }>) => {
   const user = useAppSelector((state) => state.user.data);
   return (
-    <div className="flex w-2/3 flex-col">
+    <div className="flex w-2/3 flex-col" style={{ background: 'radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.2) 100%)' }}>
       {user.id && (
         <>
           <div className="flex w-full items-center justify-center divide-x divide-element border-b-2 border-element p-2">

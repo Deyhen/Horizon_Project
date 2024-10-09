@@ -229,3 +229,18 @@ export const changeUsername = createAsyncThunk(
       }
     },
   );
+  export const addPromocodes = createAsyncThunk(
+    'add new promocodes',
+    async ({name, gameCurrencyBonus, donateCurrencyBonus, amount}:{name: string, gameCurrencyBonus: number, donateCurrencyBonus: number, amount: number}, { rejectWithValue, dispatch }) => {
+      try {
+        const payload = {name, gameCurrencyBonus, donateCurrencyBonus, amount}
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/add-promocodes`, {payload});
+        return res;
+      } catch (error) {
+          const e = error as AxiosError<any>;
+          console.log(e);
+        return rejectWithValue(e.response?.data.message);
+      }
+    }
+  )

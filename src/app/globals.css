@@ -17,5 +17,6 @@ body {
   background-position: top;
   background-origin: border-box;
   background-color: rgba(232, 232, 232, 0.99);
+  background-image: url('/images/background.png') no-repeat;
   backdrop-filter: blur(2px);
 }
