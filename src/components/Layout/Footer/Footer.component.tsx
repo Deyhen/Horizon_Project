@@ -1,3 +1,9 @@
-export const Footer = () => {
-  return <footer className="col-span-2 row-start-4 mt-8 grid bg-gray-400 md:row-start-3"></footer>;
+const Footer = () => {
+  return (
+    <footer className="col-span-2 bg-gray-800 text-white py-4 flex items-center justify-center">
+      <p>© 2024 Ukraine Horizon. All rights reserved.</p>
+    </footer>
+  );
 };
+
+export default Footer;

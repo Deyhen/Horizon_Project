@@ -30,7 +30,7 @@ const PostsPage = () => {
         />
         <div className="text-center">{post.content}</div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 top-0 m-auto max-h-fit max-w-fit rounded-md bg-element p-1 text-center text-3xl text-white">
+      <div className="absolute bottom-0 left-0 right-0 top-0 m-auto max-h-fit max-w-fit rounded-md bg-fourth p-1 text-center text-3xl text-white">
         {post.title}
       </div>
     </div>

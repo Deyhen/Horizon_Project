@@ -14,7 +14,7 @@ export default function RulesBlock({
   const [showMore, setShowMore] = useState(!tooMuchOptions);
 
   return (
-    <div className="flex w-full flex-col items-center p-6 px-12 md:items-start">
+    <div className="flex w-3/4 flex-col items-center p-6 px-12 md:items-start">
       <h2 className={`mb-2 ml-2 text-xl font-semibold`}>{`${themeIndex}. ${theme}`}</h2>
       {!showMore
         ? options

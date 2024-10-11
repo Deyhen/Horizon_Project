@@ -1,25 +1,82 @@
-import { GameServer } from '@/src/store/servers/types';
-import Link from 'next/link';
-import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+import React from 'react';
+import defaultImg from '@/public/images/defaultPostsImg.png';
 
-interface ServerBlockProps {
-  server: GameServer;
+interface ServerInfoProps {
+  title: string;
+  subtitle: string;
+  gameVersion: string;
+  mainWorldSize: string;
+  netherSize: string;
+  endWorldSize: string;
+  pvpStatus: string;
+  description: string;
+  imageSrc: string;
 }
 
-export const ServerBlock = ({ server }: ServerBlockProps) => {
+const ServerInfo: React.FC<ServerInfoProps> = ({
+  title,
+  subtitle,
+  gameVersion,
+  mainWorldSize,
+  netherSize,
+  endWorldSize,
+  pvpStatus,
+  description,
+  imageSrc,
+}) => {
   return (
-    <div className="relative mb-12 flex min-h-40 flex-col items-center justify-center rounded-b-3xl bg-white p-6 shadow-2xl shadow-element md:min-w-[30rem] md:flex-row md:rounded-[4rem] md:shadow-none">
-      <h1
-        className={
-          'absolute -top-8 left-0 right-0 mx-auto w-full bg-[#e77f2a] md:-top-5 md:w-1/3 md:min-w-fit ' +
-          'rounded-t-3xl px-4 py-1.5 text-center text-sm text-white md:rounded-3xl md:text-xl'
-        }
-      >
-        {server.title}
-      </h1>
-      <div className="absolute left-5 h-24 w-24 md:h-32 md:w-32">
-        <CircularProgressbarWithChildren
+    <div className="bg-white  relative rounded-lg shadow-lg max-w-4xl mx-auto d p-6">
+      {/* Image Section */}
+      <div className="relative">
+        <img
+          src={defaultImg.src}
+          alt={title}
+          className="rounded-t-lg max-h-80 w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black opacity-50 rounded-t-lg" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+          <h2 className="text-3xl font-bold">{title}</h2>
+          <p className="text-lg">{subtitle}</p>
+        </div>
+      </div>
+
+      {/* Server Stats Section */}
+      <div className="flex justify-around absolute top-1/2 w-[90%] rounded-xl shadow-xl mx-auto left-0 right-0 h-24 bg-gray-100 py-4 rounded-b-lg divide-x-2 divide-second">
+        <div className="text-center px-4">
+          <p className="font-bold">{gameVersion}</p>
+          <p>Версія гри</p>
+        </div>
+        <div className="text-center  px-4">
+          <p className="font-bold">{mainWorldSize}</p>
+          <p>Розмір основного світу</p>
+        </div>
+        <div className="text-center  px-4">
+          <p className="font-bold">{netherSize}</p>
+          <p>Розмір пекла</p>
+        </div>
+        <div className="text-center px-4">
+          <p className="font-bold">{endWorldSize}</p>
+          <p>Розмір ендер світу</p>
+        </div>
+        <div className="text-center px-4">
+          <p className="font-bold text-red-500">{pvpStatus}</p>
+          <p>PVP режим</p>
+        </div>
+      </div>
+
+      {/* Description Section */}
+      <div className="mt-6">
+        <p className="text-gray-700">{description}</p>
+      </div>
+    </div>
+  );
+};
+
+export default ServerInfo;
+
+
+
+{/* <CircularProgressbarWithChildren
           value={server.playersNow}
           text={`${server.playersNow}`}
           strokeWidth={8}
@@ -30,17 +87,4 @@ export const ServerBlock = ({ server }: ServerBlockProps) => {
             pathColor: `#e77f2a`,
             trailColor: '#fbbd8b',
           })}
-        />
-      </div>
-      <span className="md:items-center">{server.type}</span>
-      <Link
-        href={`/servers/${server.title}`}
-        className={
-          'absolute -bottom-5 -right-2 rounded-3xl bg-[#e77f2a] p-4 text-lg text-white md:text-xl'
-        }
-      >
-        Детальніше
-      </Link>
-    </div>
-  );
-};
+        /> */}

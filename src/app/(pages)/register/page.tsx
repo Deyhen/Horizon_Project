@@ -3,11 +3,14 @@
 import { MyInput } from '@/src/components/Custom/input/myInput.component';
 import { signup } from '@/src/store/user/actions';
 import { useAppDispatch, useAppSelector } from '@/src/store/store';
-import { Form, Formik } from 'formik';
+import { FiMail } from "react-icons/fi";
+import { ErrorMessage, Form, Formik } from 'formik';
 import { object, string, ref } from 'yup';
 import { useRouter } from 'next/navigation';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Swal from 'sweetalert2';
+import { MyButton } from '@/src/components/Custom/myButton/my-button.component';
+import { RiMapPinUserLine, RiLock2Line  } from "react-icons/ri";
 
 interface Values {
   username: string;
@@ -16,6 +19,29 @@ interface Values {
   confirmPassword: string;
 }
 
+const RegistrationSchema = object().shape({
+  username: string()
+    .min(4, 'Логін занадто короткий')
+    .max(50, 'Логін занадто довгий')
+    .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}_-]+$/gu, 'Заборонені знаки!')
+    .required(),
+  password: string()
+    .min(4, 'Пароль занадто короткий')
+    .max(50, 'Пароль занадто довгий')
+    .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}_-]+$/gu, 'Заборонені знаки!')
+    .required(),
+  email: string()
+    .min(4, 'Email занадто короткий')
+    .max(50, 'Email занадто довгий')
+    .email()
+    .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}@._-]+$/gu, 'Заборонені знаки!')
+    .required(),
+  confirmPassword: string()
+    .oneOf([ref('password'), ''], 'Паролі не співпадають')
+    .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}_-]+$/gu, 'Заборонені знаки!')
+    .required(),
+});
+
 const Registration = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -23,8 +49,14 @@ const Registration = () => {
 
   const user = useAppSelector((state) => state.user.data);
 
-  const inputClass =
-    'bg-orange text-white rounded-lg my-2 w-full h-8 placeholder:text-white p-1 px-2 focus:outline-1 outline-element ';
+  useEffect(() => {
+    if(user.id){
+      router.push('/')
+    }
+  })
+
+  const inputClass ='';
+  const containerClass="my-1 "
 
   const onSubmit = ({
     username,
@@ -58,35 +90,12 @@ const Registration = () => {
       });
   };
 
-  const RegistrationSchema = object().shape({
-    username: string()
-      .min(4, 'Username is too short!')
-      .max(50, 'Username is too long!')
-      .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}_-]+$/gu, 'invalid symbols')
-      .required(),
-    password: string()
-      .min(4, 'Password is too short!')
-      .max(50, 'Password is too long!')
-      .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}_-]+$/gu, 'invalid symbols')
-      .required(),
-    email: string()
-      .min(4, 'Email is too short!')
-      .max(50, 'Email is too long!')
-      .email()
-      .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}@._-]+$/gu, 'invalid symbols')
-      .required(),
-    confirmPassword: string()
-      .oneOf([ref('password'), ''], 'Пароли не совпадают')
-      .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}_-]+$/gu, 'invalid symbols')
-      .required(),
-  });
-
   return (
     <div
       className="relative mx-4 flex items-center justify-center rounded-b-3xl bg-white font-bold md:rounded-[2rem]"
       ref={container}
     >
-      <span className="absolute -top-5 left-0 right-0 mx-auto w-full rounded-t-3xl bg-element px-2 py-1 text-center text-white md:w-2/3 md:rounded-[2rem]">
+      <span className="absolute -top-5 left-0 right-0 mx-auto w-full rounded-t-3xl bg-fourth px-2 py-1 text-center text-white md:w-2/3 md:rounded-[2rem]">
         Реєстрація
       </span>
       {!user.id ? (
@@ -102,35 +111,65 @@ const Registration = () => {
             onSubmit({ username: values.username, email: values.email, password: values.password });
           }}
         >
+        {({ errors, touched }) => (
           <Form className="flex flex-col items-center justify-center pt-12 md:w-full md:px-8 md:py-6">
-            <MyInput inputStyle={inputClass} type="text" placeholder="username" name="username" />
-            <MyInput
-              inputStyle={inputClass}
-              type="email"
-              placeholder="email@email.com"
-              name="email"
-            />
-            <MyInput
-              inputStyle={inputClass}
-              type="password"
-              placeholder="password"
-              name="password"
-              label=""
-            />
-            <MyInput
-              inputStyle={inputClass}
-              type="password"
-              placeholder="confirm password"
-              name="confirmPassword"
-              label=""
-            />
+            <div className='flex'>
+              <div className='flex flex-col mx-4'>
+                <MyInput 
+                inputStyle={inputClass}
+                containerStyle={containerClass} 
+                type="text" 
+                placeholder="Логін" 
+                name="username" 
+                errorStyle='hidden' 
+                icon={<RiMapPinUserLine color="#FAFAFA" className='w-6 h-6 mr-1'/>}
+                />
+                <MyInput
+                  inputStyle={inputClass}
+                  containerStyle={containerClass} 
+                  type="email"
+                  placeholder="email@email.com"
+                  name="email"
+                  errorStyle='hidden'
+                  icon={<FiMail color="#FAFAFA" className='w-6 h-6 mr-1'/>}
+                />
+              </div>
+              <div className='flex flex-col mx-4'>
+                <MyInput
+                  inputStyle={inputClass}
+                  containerStyle={containerClass} 
+                  type="password"
+                  placeholder="Пароль"
+                  name="password"
+                  label=""
+                  errorStyle='hidden'
+                  icon={<RiLock2Line color="#FAFAFA" className='w-6 h-6 mr-1'/>}
+                />
+                <MyInput
+                  inputStyle={inputClass}
+                  containerStyle={containerClass} 
+                  type="password"
+                  placeholder="Повторіть пароль"
+                  name="confirmPassword"
+                  label=""
+                  errorStyle='hidden'
+                  icon={<RiLock2Line color="#FAFAFA" className='w-6 h-6 mr-1'/>}
+                />
+              </div>
+            </div>
 
             <div className="mb-4 flex w-full items-center justify-center">
-              <button type="submit" className="mx-4 my-2 min-w-32 rounded-[2rem] bg-gray-300 p-2">
-                Надіслати
-              </button>
+              <MyButton type="submit" className="rounded-2xl py-2 px-4 mt-4">
+                <span>Зареєеструватись</span>
+              </MyButton>
             </div>
-          </Form>
+            { errors.username && touched.username ? 
+              <ErrorMessage name="username" >{msg => <div className='text-first'>{"Логін є обов'язковим полем"}</div>}</ErrorMessage> :
+              errors.password && touched.password ? 
+              <ErrorMessage name="password" className='text-first' >{msg => <div className='text-first'>{"Пароль є обов'язковим полем"}</div>}</ErrorMessage> :
+              null
+            }
+          </Form>)}
         </Formik>
       ) : (
         <div className="flex items-center justify-center p-40 text-3xl">

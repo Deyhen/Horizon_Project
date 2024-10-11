@@ -86,6 +86,7 @@ export const checkResetToken = createAsyncThunk(
   'check reset token',
   async (token: string, { rejectWithValue }) => {
     try {
+      console.log(token);
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password/chek/${token}`,
       );

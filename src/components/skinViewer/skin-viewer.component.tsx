@@ -4,6 +4,7 @@ import { BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs';
 import Dropdown from '../Custom/dropdown/dropdown.component';
 import defaultSkin from '@/public/images/default-skin.png';
 import { User } from '@/src/store/user/types';
+import { MyButton } from '../Custom/myButton/my-button.component';
 
 const MinecraftSkinViewer = ({ user }: { user: User }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -38,7 +39,7 @@ const MinecraftSkinViewer = ({ user }: { user: User }) => {
         case 'Політ':
           viewer.animation = new skinview3d.FlyingAnimation();
           break;
-        case 'Ходьба':
+        case 'Хід':
           viewer.animation = new skinview3d.WalkingAnimation();
           break;
         case 'Біг':
@@ -59,29 +60,32 @@ const MinecraftSkinViewer = ({ user }: { user: User }) => {
   }, [user.skinPath, animation, hideCape, animationPaused, user.capePath]);
 
   return (
-    <div className="relative mr-8 flex w-80 flex-col border-2 border-black">
+    <div className="relative mr-8 flex w-80 flex-col ">
       <canvas className="h-full w-full" ref={canvasRef} />
 
       <button
         onClick={() => setAnimationPaused(!animationPaused)}
         className="absolute right-2 top-2"
       >
-        {animationPaused ? <BsFillPlayFill size={30} /> : <BsFillPauseFill size={30} />}
+        {animationPaused ? <BsFillPlayFill size={30} color="#E75C01"/> : <BsFillPauseFill size={30} color="#E75C01"/>}
       </button>
 
-      <div className="absolute bottom-0 flex w-full items-center justify-between">
+      <div className='absolute -bottom-0 left-0'>
         <Dropdown
           label={`${animation}`}
-          options={['Політ', 'Ходьба', 'Біг', 'Спокій']}
+          options={['Спокій', 'Хід', 'Біг', 'Політ']}
           onSelect={(animation) => setAnimation(animation)}
+          position='top'
+          
         />
-        <button
-          onClick={() => setHideCape(!hideCape)}
-          className="inline-flex justify-center rounded-md bg-element px-3 py-1 font-semibold text-white focus:outline-none"
-        >
-          Накидка {hideCape ? 'вимк' : 'вімк'}
-        </button>
       </div>
+      <MyButton
+        onClick={() => setHideCape(!hideCape)}
+        className="rounded-xl min-w-44 absolute -bottom-0 right-0"
+      >
+          <span>{!hideCape ? 'Сховати' : 'Показати'} накидку</span>
+      </MyButton>
+
     </div>
   );
 };

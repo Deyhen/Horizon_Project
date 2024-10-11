@@ -1,15 +1,31 @@
 'use client';
 
+import { MyInput } from '@/src/components/Custom/input/myInput.component';
+import { MyButton } from '@/src/components/Custom/myButton/my-button.component';
 import { useAppDispatch } from '@/src/store/store';
 import { checkResetToken, resetPassword } from '@/src/store/user/actions';
+import { ErrorMessage, Form, Formik } from 'formik';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import { object, ref, string } from 'yup';
+
+const RegistrationSchema = object().shape({
+  password: string()
+    .min(4, 'Пароль занадто короткий')
+    .max(50, 'Пароль занадто довгий')
+    .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}_-]+$/gu, 'Заборонені знаки!')
+    .required(),
+
+  confirmPassword: string()
+    .oneOf([ref('password'), ''], 'Паролі не співпадають')
+    .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}_-]+$/gu, 'Заборонені знаки!')
+    .required(),
+});
+
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(true);
-  const [newPassword, setNewPassword] = useState('');
-  const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('');
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -34,7 +50,7 @@ const ResetPassword = () => {
     }
   }, [dispatch, router, token]);
 
-  const handleSubmit = () => {
+  const handleSubmit = ({newPassword, newPasswordConfirmation}: {newPassword: string, newPasswordConfirmation: string}) => {
     if (newPassword === newPasswordConfirmation && token) {
       dispatch(resetPassword({ token: token, password: newPassword }))
         .unwrap()
@@ -65,30 +81,43 @@ const ResetPassword = () => {
   };
 
   return !loading ? (
-    <div className="flex flex-col items-center justify-center rounded-3xl bg-white p-6">
-      <h1 className="mx-2 mb-2 text-2xl text-element">Відновлення паролю</h1>
-      <div className="mt-4 flex flex-col">
-        <input
-          type="password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          placeholder="Уведіть новий пароль"
-          className="m-2 border-2 border-orange p-1 text-element focus:outline-element"
-        />
-        <input
-          type="password"
-          value={newPasswordConfirmation}
-          onChange={(e) => setNewPasswordConfirmation(e.target.value)}
-          placeholder="Повторіть новий пароль"
-          className="m-2 border-2 border-orange p-1 text-element focus:outline-element"
-        />
-      </div>
-      <button
-        onClick={handleSubmit}
-        className="mt-8 rounded-xl border-2 border-element p-3 text-element hover:bg-element hover:text-white"
-      >
-        Встановити новий пароль
-      </button>
+    <div className="flex flex-col items-center justify-center rounded-3xl bg-white p-6 mb-24">
+      <h1 className="mx-2 mb-2 text-2xl text-first">Відновлення паролю</h1>
+      <Formik
+      initialValues={{
+        password: '',
+        confirmPassword: '',
+          }}
+          validationSchema={RegistrationSchema}
+          onSubmit={(values: {password: string, confirmPassword: string}) => {
+            handleSubmit({ newPassword: values.password, newPasswordConfirmation: values.confirmPassword });
+          }}>
+        {({ errors, touched }) => (
+        <Form>
+          <div className="mt-4 flex flex-col">
+          <MyInput
+            name='password'
+            type="password"
+            placeholder="Уведіть новий пароль"
+            errorStyle="h-8"
+ 
+          />
+          <MyInput
+            name="confirmPassword"
+            type="password"
+            placeholder="Повторіть новий пароль"
+            errorStyle="h-8"
+
+          />
+        </div>
+        <MyButton
+        type="submit"
+        className='rounded-xl mt-4 py-2 px-4'
+          >
+        <span>Встановити новий пароль</span>
+        </MyButton>
+        </Form>)}
+      </Formik>
     </div>
   ) : (
     <div>Loading...</div>

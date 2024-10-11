@@ -5,6 +5,7 @@ import { Login } from './Login/login.component';
 import { MiniProfile } from './MiniProfile/miniProfile.component';
 import { useEffect } from 'react';
 import { checkUser } from '@/src/store/user/actions';
+import { Loader } from '../../Custom/loader/loader.component';
 
 export const RightBar = () => {
   const user = useAppSelector((state) => state.user.data);
@@ -15,8 +16,8 @@ export const RightBar = () => {
     dispatch(checkUser());
   }, [dispatch]);
   return (
-    <div className="row-start-2 mb-24 md:mt-40">
-      {!loading ? !user.id ? <Login /> : <MiniProfile /> : <div>Loading...</div>}
+    <div className={`row-start-2 mt-24 flex justify-center items-start`}>
+      {!loading ? !user.id ? <Login /> : <MiniProfile/> : <Loader/>}
     </div>
   );
 };

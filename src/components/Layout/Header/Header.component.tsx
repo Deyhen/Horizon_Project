@@ -17,7 +17,7 @@ export const Header = () => {
       <div className={`hidden items-center md:flex`}>
         <Image className={''} src={Hero} alt={'Woops'} />
         <div className={`flex flex-col text-white ${textShadow} text-4xl`}>
-          <span className="font-thin">Приєднуйся до гри </span>
+          <span className="font-light">Приєднуйся до гри </span>
           <span className="font-bold">ПРЯМО ЗАРАЗ!</span>
         </div>
       </div>
@@ -41,7 +41,7 @@ export const Header = () => {
           <span className={`text-xl text-white ${textShadow} mb-4`}>ЗАВАНТАЖУЙ ЛАУНЧЕР!</span>
           <button className={`${button}`}>
             <Image className={`h-16 w-20`} src={WindowsLogo} alt={'Woops'} />
-            <span className="w-full text-center text-orange">
+            <span className="w-full text-center text-second">
               Версія для
               <br />
               Windows 32/64 bit
@@ -49,7 +49,7 @@ export const Header = () => {
           </button>
           <button className={`${button}`}>
             <Image className={`h-16 w-20`} src={LinuxAndAppleLogo} alt={'Woops'} />
-            <span className="w-full text-center text-orange">
+            <span className="w-full text-center text-second">
               Версія для
               <br />
               Linux / Mac O

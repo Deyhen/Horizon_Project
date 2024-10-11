@@ -1,5 +1,7 @@
+import { Loader } from "../components/Custom/loader/loader.component"
+
 const Loading = () => {
-  return <div>Loading...</div>;
+  return <Loader/>;
 };
 
 export default Loading;

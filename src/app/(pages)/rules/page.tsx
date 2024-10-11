@@ -1,11 +1,26 @@
 'use client';
 
 import RulesBlock from '@/src/components/RuleBlock/RuleBlock.component';
+import { useEffect, useState } from 'react';
+
 
 const Rules = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 10);
+
+}, []);
+
   return (
     <div
-      className={`relative flex flex-col rounded-b-3xl bg-white py-12 shadow-2xl shadow-element md:rounded-[2rem] md:shadow-none`}
+      className={`relative w-3/4 flex flex-col rounded-b-3xl bg-white py-12 shadow-2xl shadow-element md:rounded-[2rem]
+                 md:shadow-none transform transition-transform duration-500 ease-in-out  ${
+                isVisible ? 'translate-x-0' : '-translate-x-[200%]'
+          }`}
     >
       <h1
         className={`absolute -top-8 left-0 right-0 mx-auto w-full rounded-t-3xl bg-[#e77f2a] px-4 py-1.5 text-center text-xl font-bold text-white md:-top-5 md:w-1/3 md:min-w-fit md:rounded-3xl md:text-xl`}

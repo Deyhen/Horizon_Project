@@ -4,13 +4,14 @@ interface DropdownProps {
   label: string;
   options: string[];
   onSelect: (option: string) => void;
+  position?: 'top' | 'bottom'; // Dropdown can be positioned on top or bottom
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
+const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect, position = 'bottom' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleToggle = () => setIsOpen(!isOpen);
+  const handleToggle = () => setIsOpen((prev) => !prev);
 
   const handleOptionClick = (option: string) => {
     onSelect(option);
@@ -28,14 +29,16 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
   }, []);
 
   return (
-    <div className="relative inline-block text-left" ref={dropdownRef}>
+    <div className="relative inline-block text-left min-w-28" ref={dropdownRef}>
       <button
         onClick={handleToggle}
-        className="inline-flex w-full justify-center rounded-md bg-element px-2 py-1 font-semibold text-white focus:outline-none"
+        className="inline-flex w-full justify-center rounded-xl border-2 border-first hover:border-second bg-transparent hover:bg-second px-2 py-1 font-semibold text-first hover:text-white transition-all duration-300"
       >
         {label}
         <svg
-          className="-mr-1 ml-2 h-5 w-5"
+          className={`-mr-1 ml-2 h-5 w-5 transform transition-transform duration-300 ${
+            isOpen ? 'rotate-180' : 'rotate-0'
+          }`}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -50,21 +53,26 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
         </svg>
       </button>
 
-      {isOpen && (
-        <div className="absolute mt-1 origin-top-right rounded-md bg-orange text-white">
-          <div className="py-1">
-            {options.map((option, index) => (
-              <a
-                key={index}
-                onClick={() => handleOptionClick(option)}
-                className="block cursor-pointer px-4 py-2 text-sm hover:bg-element"
-              >
-                {option}
-              </a>
-            ))}
-          </div>
+      <div
+        className={`absolute ${
+          position === 'top' ? 'bottom-full mb-2' : 'top-full mt-1'
+        } left-0 w-full transition-all duration-200 transform ${
+          isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'
+        } bg-third text-white rounded-md shadow-lg z-10`}
+        style={{ transformOrigin: 'top' }} // Ensures animation originates from the top
+      >
+        <div className=" rounded-xl text-center">
+          {options.map((option, index) => (
+            <a
+              key={index}
+              onClick={() => handleOptionClick(option)}
+              className="block cursor-pointer px-4 py-2 text-sm hover:bg-second font-semibold w-full transition-colors duration-200"
+            >
+              {option}
+            </a>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };

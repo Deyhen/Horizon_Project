@@ -5,10 +5,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        orange: '#fbbd8b',
-        element: '#e77f2a',
+        first: '#E75C01',
+        second: '#F1861C',
+        third: '#FCBE8D',
+        fourth: '#DEBC8E'
       },
-    },
+
   },
   plugins: [],
-};
+}};

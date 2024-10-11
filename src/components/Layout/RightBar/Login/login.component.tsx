@@ -2,23 +2,46 @@
 
 import { forgotPassword, login } from '@/src/store/user/actions';
 import { useAppDispatch } from '@/src/store/store';
-import { Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik } from 'formik';
 import { object, string } from 'yup';
-
+import { RiMapPinUserLine, RiLock2Line  } from "react-icons/ri";
 import Link from 'next/link';
 import Swal from 'sweetalert2';
 import styles from './styles.module.css';
 import { MyInput } from '@/src/components/Custom/input/myInput.component';
+import { useEffect, useState } from 'react';
+import { MyButton } from '@/src/components/Custom/myButton/my-button.component';
 
 interface Values {
   username: string;
   password: string;
 }
 
+const LoginSchema = object().shape({
+  username: string()
+    .min(4, 'Логін ззанадто короткий')
+    .max(50, 'Логін занадто довгий')
+    .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}_-]+$/gu, 'Заборонені знаки!')
+    .required(),
+  password: string()
+    .min(4, 'Пароль занадто короткий')
+    .max(50, 'Пароль занадто довгий')
+    .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}_-]+$/gu, 'Заборонені знаки!')
+    .required(),
+});
+
 export const Login = () => {
   const dispatch = useAppDispatch();
-  const inputClass =
-    'bg-orange text-white rounded-lg my-2 w-full h-8 placeholder:text-white p-1 px-2 focus:outline-1 outline-element';
+  const inputClass = 'w-full';
+  const [isVisible, setIsVisible] = useState(false);
+
+
+    useEffect(() => {
+      setTimeout(() => {
+        setIsVisible(true);
+      }, 10); 
+    }, []);
+  
 
   const handleForgotPassword = async () => {
     const { value: email } = await Swal.fire({
@@ -46,21 +69,12 @@ export const Login = () => {
     }
   };
 
-  const LoginSchema = object().shape({
-    username: string()
-      .min(4, 'Username is too short!')
-      .max(50, 'Username is too long!')
-      .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}_-]+$/gu, 'invalid symbols')
-      .required(),
-    password: string()
-      .min(4, 'Password is too short!')
-      .max(50, 'Password is too long!')
-      .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}_-]+$/gu, 'invalid symbols')
-      .required(),
-  });
+
   return (
-    <div className="relative mx-4 flex items-center justify-center rounded-b-3xl bg-white font-bold md:rounded-[2rem]">
-      <span className="absolute -top-5 left-0 right-0 mx-auto w-full rounded-t-3xl bg-element px-2 py-1 text-center text-white md:w-2/3 md:rounded-[2rem]">
+    <div
+      className={`relative mx-4 flex items-center justify-center rounded-b-3xl bg-white px-4 font-bold md:rounded-[2rem] md:px-6
+      transform transition-transform duration-300 ease-in-out ${isVisible ? 'translate-x-0' : 'translate-x-full'}`}>
+      <span className="absolute -top-5 left-0 right-0 mx-auto w-full rounded-t-3xl bg-fourth px-2 py-1 text-center text-white md:w-2/3 md:rounded-[2rem]">
         Авторизація
       </span>
       <Formik
@@ -74,7 +88,6 @@ export const Login = () => {
             .unwrap()
             .then(async () => {})
             .catch((rejectedValueOrSerializedError) => {
-              console.log(rejectedValueOrSerializedError);
               Swal.fire({
                 title: rejectedValueOrSerializedError,
                 confirmButtonColor: '#e77f2a',
@@ -84,33 +97,52 @@ export const Login = () => {
             });
         }}
       >
-        <Form className="flex flex-col items-center justify-center pt-12 md:w-full md:px-8 md:py-6">
-          <MyInput inputStyle={inputClass} type="text" placeholder="username" name="username" />
+        {({ errors, touched }) => (
+        <Form className="flex w-full flex-col items-center justify-center py-6 mt-4">
+          <MyInput 
+          className={inputClass} 
+          type="text" 
+          placeholder="Логін" 
+          name="username" 
+          errorStyle='hidden'
+          icon={<RiMapPinUserLine color="#FAFAFA" className='w-6 h-6 mr-1'/>}
+          />
           <MyInput
+            containerStyle='mt-4'
             inputStyle={inputClass}
             type="password"
-            placeholder="password"
+            placeholder="Пароль"
             name="password"
             label=""
+            errorStyle='hidden'
+            icon={<RiLock2Line color="#FAFAFA" className='w-6 h-6 mr-2'/>}
           />
-          <span
-            className="mb-2 w-full cursor-pointer text-end text-sm text-gray-300 underline"
+          <div
+            className="my-2 w-full flex justify-end"
             onClick={handleForgotPassword}
           >
-            Забули пароль?
-          </span>
+            <span onClick={handleForgotPassword} className='cursor-pointer  text-sm text-gray-300 underline'>Забули пароль?</span>
+          </div>
           <div className="mb-4 flex w-full items-center justify-center">
             <Link
               href="/register"
-              className="mx-4 my-2 min-w-32 rounded-[2rem] bg-gray-300 p-2 text-center"
             >
-              Регістрація
+              <MyButton className="mr-2 my-2 px-6 py-2 min-w-36 rounded-[2rem]">
+                <span>Реєстрація</span>
+              </MyButton>
             </Link>
-            <button type="submit" className="mx-4 my-2 min-w-32 rounded-[2rem] bg-gray-300 p-2">
-              Увійти
-            </button>
+            <MyButton type="submit" className="ml-2 my-2 px-6 py-2 min-w-36 rounded-[2rem]">
+                <span>Увійти</span>
+            </MyButton>
+            
           </div>
-        </Form>
+          { errors.username && touched.username ? 
+          <ErrorMessage name="username" >{msg => <div className='text-first'>{"Логін є обов'язковим полем"}</div>}</ErrorMessage> :
+          errors.password && touched.password ? 
+          <ErrorMessage name="password" className='text-first' >{msg => <div className='text-first'>{"Пароль є обов'язковим полем"}</div>}</ErrorMessage> :
+          null
+          }
+        </Form>)}
       </Formik>
     </div>
   );
