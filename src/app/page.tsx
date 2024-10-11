@@ -9,10 +9,6 @@ import { Loader } from '../components/Custom/loader/loader.component';
 const Home = () => {
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [startX, setStartX] = useState(0); 
-  const [scrollLeft, setScrollLeft] = useState(0);
 
   useEffect(() => {
     dispatch(getPosts());
@@ -30,53 +26,16 @@ const Home = () => {
   }, [loading]);
 
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!scrollContainerRef.current) return;
-
-    setIsDragging(true);
-    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
-    
-
-    document.body.style.userSelect = 'none';
-    scrollContainerRef.current.style.cursor = 'grabbing';
-  };
-
-
-  const handleMouseUpOrLeave = () => {
-    setIsDragging(false);
-
-    document.body.style.userSelect = 'auto';
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.style.cursor = 'grab';
-    }
-  };
-
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging || !scrollContainerRef.current) return;
-
-    e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 5; 
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
+  
   return (
     <div className="w-3/4 h-full justify-center items-center">
       {loading ? (
         <Loader />
       ) : postsData.length ? (
         <div
-          className={`flex w-full overflow-hidden transform transition-transform duration-500 ease-in-out snap-x scroll-smooth snap-mandatory ${
+          className={`flex flex-col  transform transition-transform duration-500 ease-in-out ${
             isVisible ? 'translate-x-0' : '-translate-x-full'
           }`}
-          ref={scrollContainerRef}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUpOrLeave}
-          onMouseLeave={handleMouseUpOrLeave}
-          style={{ cursor: 'grab', transition: 'transform 0.3s ease-out' }}
         >
           {postsData.map((item) => (
             <PostBlock

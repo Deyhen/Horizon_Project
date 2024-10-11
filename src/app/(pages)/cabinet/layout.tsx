@@ -31,7 +31,7 @@ const CabinetLayout = ({
   };
 
   return (
-    <div className="flex w-2/3 flex-col rounded-lg" style={{ background: 'radial-gradient( rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.2) 80%, rgba(255, 255, 255, 0.0) 95%)' }}>
+    <div className="flex  w-2/3 flex-col rounded-lg" style={{ background: 'radial-gradient( rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.2) 80%, rgba(255, 255, 255, 0.0) 95%)' }}>
       {user.id && (
         <>
           <div className="flex w-full items-center justify-center divide-x divide-second border-b-2 border-second font-bold">
