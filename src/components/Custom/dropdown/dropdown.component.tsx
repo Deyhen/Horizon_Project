@@ -29,10 +29,10 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect, position 
   }, []);
 
   return (
-    <div className="relative inline-block text-left min-w-28" ref={dropdownRef}>
+    <div className="relative inline-block min-w-28 text-left" ref={dropdownRef}>
       <button
         onClick={handleToggle}
-        className="inline-flex w-full justify-center rounded-xl border-2 border-first hover:border-second bg-transparent hover:bg-second px-2 py-1 font-semibold text-first hover:text-white transition-all duration-300"
+        className="inline-flex w-full justify-center rounded-xl border-2 border-first bg-transparent px-2 py-1 font-semibold text-first transition-all duration-300 hover:border-second hover:bg-second hover:text-white"
       >
         {label}
         <svg
@@ -56,17 +56,17 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect, position 
       <div
         className={`absolute ${
           position === 'top' ? 'bottom-full mb-2' : 'top-full mt-1'
-        } left-0 w-full transition-all duration-200 transform ${
-          isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'
-        } bg-third text-white rounded-md shadow-lg z-10`}
+        } left-0 w-full transform transition-all duration-200 ${
+          isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'
+        } z-10 rounded-md bg-third text-white shadow-lg`}
         style={{ transformOrigin: 'top' }} // Ensures animation originates from the top
       >
-        <div className=" rounded-xl text-center">
+        <div className="rounded-xl text-center">
           {options.map((option, index) => (
             <a
               key={index}
               onClick={() => handleOptionClick(option)}
-              className="block cursor-pointer px-4 py-2 text-sm hover:bg-second font-semibold w-full transition-colors duration-200"
+              className="block w-full cursor-pointer px-4 py-2 text-sm font-semibold transition-colors duration-200 hover:bg-second"
             >
               {option}
             </a>

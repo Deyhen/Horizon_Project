@@ -26,7 +26,7 @@ axios.interceptors.request.use((config) => {
 //     console.log(res.status);
 //     if(res.status == 401 ){
 //         originalRequest.isRetry = true
-//         try { 
+//         try {
 //             const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/refresh`, {withCredentials: true})
 //             console.log(response);
 //             localStorage.setItem('accessToken', response.data.accessToken)

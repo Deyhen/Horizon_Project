@@ -9,10 +9,8 @@ export const MyInput = ({
   labelStyle,
   errorStyle,
   icon,
-  formik,
   ...props
 }: InputProps & InputHTMLAttributes<HTMLInputElement>): JSX.Element => {
-  
   const [field, meta] = useField(props);
   return (
     <>
@@ -22,18 +20,28 @@ export const MyInput = ({
           <input {...field} {...props} className={labelStyle} autoComplete="off" />
         </label>
       ) : (
-        <div className={ containerStyle + " " + `flex items-center px-2 py-1 bg-third rounded-lg border-white focus:border-first border-2 w-full`}>
+        <div
+          className={
+            containerStyle +
+            ' ' +
+            `flex w-full items-center rounded-lg border-2 border-white bg-third px-2 py-1 focus:border-first`
+          }
+        >
           {icon}
-          <input {...field} {...props} className={inputStyle
-            + ' ' + 
-            `bg-transparent text-white outline-none rounded-lg w-full placeholder:text-white placeholder:font-normal `}
-            autoComplete="off" />
-          
-      </div>
-
+          <input
+            {...field}
+            {...props}
+            className={
+              inputStyle +
+              ' ' +
+              `w-full rounded-lg bg-transparent text-white outline-none placeholder:font-normal placeholder:text-white`
+            }
+            autoComplete="off"
+          />
+        </div>
       )}
       <div className={errorStyle}>
-        {meta.error && meta.touched && <div className={`text-first my-1`}>{meta.error}</div>}
+        {meta.error && meta.touched && <div className={`my-1 text-first`}>{meta.error}</div>}
       </div>
     </>
   );

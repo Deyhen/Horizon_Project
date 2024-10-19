@@ -15,7 +15,7 @@ const MinecraftSkinViewer = ({ user }: { user: User }) => {
   useEffect(() => {
     const skinPath = user.skinPath
       ? process.env.NEXT_PUBLIC_BACKEND_STATIC_URL + user.skinPath
-      : defaultSkin;
+      : defaultSkin.src;
     const capePath =
       user.capePath && !hideCape
         ? process.env.NEXT_PUBLIC_BACKEND_STATIC_URL + user.capePath
@@ -60,32 +60,34 @@ const MinecraftSkinViewer = ({ user }: { user: User }) => {
   }, [user.skinPath, animation, hideCape, animationPaused, user.capePath]);
 
   return (
-    <div className="relative mr-8 flex w-80 flex-col ">
+    <div className="relative mr-8 flex w-80 flex-col">
       <canvas className="h-full w-full" ref={canvasRef} />
 
       <button
         onClick={() => setAnimationPaused(!animationPaused)}
         className="absolute right-2 top-2"
       >
-        {animationPaused ? <BsFillPlayFill size={30} color="#E75C01"/> : <BsFillPauseFill size={30} color="#E75C01"/>}
+        {animationPaused ? (
+          <BsFillPlayFill size={30} color="#E75C01" />
+        ) : (
+          <BsFillPauseFill size={30} color="#E75C01" />
+        )}
       </button>
 
-      <div className='absolute -bottom-0 left-0'>
+      <div className="absolute -bottom-0 left-0">
         <Dropdown
           label={`${animation}`}
           options={['Спокій', 'Хід', 'Біг', 'Політ']}
           onSelect={(animation) => setAnimation(animation)}
-          position='top'
-          
+          position="top"
         />
       </div>
       <MyButton
         onClick={() => setHideCape(!hideCape)}
-        className="rounded-xl min-w-44 absolute -bottom-0 right-0"
+        className="absolute -bottom-0 right-0 min-w-44 rounded-xl"
       >
-          <span>{!hideCape ? 'Сховати' : 'Показати'} накидку</span>
+        <span>{!hideCape ? 'Сховати' : 'Показати'} накидку</span>
       </MyButton>
-
     </div>
   );
 };

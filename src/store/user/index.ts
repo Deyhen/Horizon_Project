@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AxiosError } from 'axios';
+
 import { RootState } from '../store';
 import { User, UserState } from './types';
 import {
@@ -14,6 +14,7 @@ import {
   resetPassword,
   signup,
 } from './actions';
+import { act } from 'react';
 
 const initialUser: User = {
   id: '',
@@ -93,6 +94,15 @@ export const userSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.data = action.payload.data as User;
+    });
+    builder.addCase(changeAvatar.fulfilled, (state, action) => {
+      state.data.avatarPath = action.payload.data;
+    });
+    builder.addCase(changeCape.fulfilled, (state, action) => {
+      state.data.capePath = action.payload.data;
+    });
+    builder.addCase(changeSkin.fulfilled, (state, action) => {
+      state.data.skinPath = action.payload.data;
     });
   },
 });

@@ -1,5 +1,6 @@
 export interface ServersState {
   data: GameServer[];
+  loading: boolean;
 }
 export interface GameServer {
   title: string;

@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { IconType } from "react-icons";
+import { ReactElement } from 'react';
+import { IconType } from 'react-icons';
 
 export interface InputProps {
   label?: string;
@@ -10,5 +10,5 @@ export interface InputProps {
   errorStyle?: string;
   containerStyle?: string;
   icon?: ReactElement<IconType>;
-  formik?: boolean
+  formik?: boolean;
 }

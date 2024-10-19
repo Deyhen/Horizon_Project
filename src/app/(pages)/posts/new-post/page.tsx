@@ -38,7 +38,7 @@ const NewPostPage = () => {
   return (
     <div className="w-1/2 rounded-3xl bg-white p-6">
       <div className="flex flex-col items-center justify-center pt-12 md:w-full md:px-8 md:py-6">
-        <h1 className="mb-8 text-2xl text-element outline-1 outline-orange">Add new post</h1>
+        <h1 className="text-element outline-orange mb-8 text-2xl outline-1">Add new post</h1>
         <input
           className={inputClass + 'px-4 text-center'}
           type="title"

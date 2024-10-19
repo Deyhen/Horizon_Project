@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PostBlock } from '../components/PagesBlocks/postBlock.component';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { getPosts } from '../store/posts/actions';
@@ -10,6 +10,7 @@ const Home = () => {
   const dispatch = useAppDispatch();
   const [isVisible, setIsVisible] = useState(false);
 
+  // Fetch posts data on component mount
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
@@ -17,24 +18,23 @@ const Home = () => {
   const loading = useAppSelector((state) => state.posts.loading);
   const postsData = useAppSelector((state) => state.posts.data);
 
+  // Trigger animation when data is loaded
   useEffect(() => {
     if (!loading) {
       setTimeout(() => {
         setIsVisible(true);
-      }, 10);
+      }, 10); // Small delay for smooth animation
     }
   }, [loading]);
 
-
-  
   return (
-    <div className="w-3/4 h-full justify-center items-center">
+    <div className="h-full w-3/4 items-center justify-center">
       {loading ? (
         <Loader />
       ) : postsData.length ? (
         <div
-          className={`flex flex-col  transform transition-transform duration-500 ease-in-out ${
-            isVisible ? 'translate-x-0' : '-translate-x-full'
+          className={`flex transform flex-col transition-transform duration-1000 ease-in-out ${
+            isVisible ? 'animate-slide-in' : 'opacity-0'
           }`}
         >
           {postsData.map((item) => (
@@ -48,7 +48,7 @@ const Home = () => {
           ))}
         </div>
       ) : (
-        <div className="p-4 text-3xl text-second bg-white rounded-3xl font-bold text-center">
+        <div className="rounded-3xl bg-white p-4 text-center text-3xl font-bold text-second">
           Список постів порожній
         </div>
       )}

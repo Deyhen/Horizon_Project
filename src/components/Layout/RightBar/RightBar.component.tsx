@@ -16,8 +16,8 @@ export const RightBar = () => {
     dispatch(checkUser());
   }, [dispatch]);
   return (
-    <div className={`row-start-2 mt-24 flex justify-center items-start`}>
-      {!loading ? !user.id ? <Login /> : <MiniProfile/> : <Loader/>}
+    <div className={`row-start-2 mt-24 flex items-start justify-center`}>
+      {!loading ? !user.id ? <Login /> : <MiniProfile /> : <Loader />}
     </div>
   );
 };

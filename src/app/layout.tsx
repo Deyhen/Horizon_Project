@@ -1,5 +1,5 @@
-import  Footer  from '../components/Layout/Footer/Footer.component';
-import { Montserrat } from "next/font/google";
+import Footer from '../components/Layout/Footer/Footer.component';
+import { Montserrat } from 'next/font/google';
 import StoreProvider from '../components/StoreProvider/storeProvider.component';
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
@@ -20,7 +20,12 @@ const RootLayout = ({
       <GoogleTagManager gtmId="GTM-NLDFQCJH" />
       <GoogleAnalytics gaId="G-HJ6KRNLZR7" />
       <StoreProvider>
-        <body className={`grid grid-cols-[1fr] grid-rows-[15rem,auto,1fr,10rem] md:grid-cols-[1fr,24rem] md:grid-rows-[40rem,1fr,24rem] ` + montserrat.className}>
+        <body
+          className={
+            `grid grid-cols-[1fr] grid-rows-[15rem,auto,1fr,10rem] md:grid-cols-[1fr,24rem] md:grid-rows-[40rem,1fr,24rem] ` +
+            montserrat.className
+          }
+        >
           {/*//<!-- Google Tag Manager (noscript) -->*/}
           <noscript>
             <iframe

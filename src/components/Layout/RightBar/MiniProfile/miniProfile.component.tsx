@@ -25,8 +25,6 @@ export const MiniProfile = () => {
   const user = useAppSelector((state) => state.user.data);
   const dispatch = useAppDispatch();
 
-  const avatar = process.env.NEXT_PUBLIC_BACKEND_STATIC_URL + user.avatarPath;
-
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -43,25 +41,28 @@ export const MiniProfile = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsVisible(true);
-    }, 10); 
+    }, 10);
   }, []);
 
   return (
     <div
-      className={`relative mx-4 flex items-center justify-center rounded-b-3xl bg-white px-4 font-bold md:rounded-[2rem] md:px-10 min-w-[21rem]
-      transform transition-transform duration-300 ease-in-out ${isVisible ? 'translate-x-0' : 'translate-x-full'}`}
+      className={`relative mx-4 flex min-w-[21rem] transform items-center justify-center rounded-b-3xl bg-white px-4 font-bold transition-transform duration-300 ease-in-out md:rounded-[2rem] md:px-10 ${isVisible ? 'translate-x-0' : 'translate-x-full'}`}
     >
       <span className="absolute -top-5 left-0 right-0 mx-auto w-full rounded-t-3xl bg-fourth px-2 py-1 text-center text-white md:w-2/3 md:rounded-[2rem]">
         Профіль
       </span>
       <div className="flex w-full flex-col items-start justify-center py-6">
-        <span className="w-full text-center text-xl text-orange">
+        <span className="text-orange w-full text-center text-xl">
           {user.username.toUpperCase()}
         </span>
         <div className="flex w-full md:flex-col md:items-center md:justify-center">
           <div className="text- my-2 flex w-full items-center justify-start md:justify-center">
             <Image
-              src={user.avatarPath ? avatar : defaultAvatar}
+              src={
+                user.avatarPath
+                  ? process.env.NEXT_PUBLIC_BACKEND_STATIC_URL + user.avatarPath
+                  : defaultAvatar
+              }
               className="h-24 w-24"
               alt=""
               width={400}
@@ -85,7 +86,7 @@ export const MiniProfile = () => {
             </div>
           </div>
         </div>
-        <div className="w-full flex flex-row text-xs md:flex-col md:text-lg">
+        <div className="flex w-full flex-row text-xs md:flex-col md:text-lg">
           <Link href={`/cabinet`}>
             <div className={line}>
               <RiUserLine className={lineImg} color="#DEBC8E" />
@@ -93,10 +94,10 @@ export const MiniProfile = () => {
             </div>
           </Link>
 
-            <div className={line} onClick={handleBlockLiks}>
-              <IoDiamondOutline className={lineImg} color="#DEBC8E" />
-              <span className="w-full text-center">Поповнення балансу</span>
-            </div>
+          <div className={line} onClick={handleBlockLiks}>
+            <IoDiamondOutline className={lineImg} color="#DEBC8E" />
+            <span className="w-full text-center">Поповнення балансу</span>
+          </div>
 
           <div className={line} onClick={handleBlockLiks}>
             <BsCurrencyDollar className={lineImg} color="#DEBC8E" />
@@ -107,13 +108,13 @@ export const MiniProfile = () => {
             <span className="w-full text-center">Магазин ресурсів</span>
           </div>
           <Link href={`/cabinet/opportunities`}>
-            <div className={line} >
+            <div className={line}>
               <RiSparkling2Line className={lineImg} color="#DEBC8E" />
               <span className="w-full text-center">Задіяти промокод</span>
             </div>
           </Link>
           <Link href={`/cabinet/opportunities`}>
-            <div className={line} >
+            <div className={line}>
               <AiOutlineSetting className={lineImg} color="#DEBC8E" />
               <span className="w-full text-center">Додатково</span>
             </div>
@@ -121,7 +122,7 @@ export const MiniProfile = () => {
         </div>
         <div className="flex w-full items-center justify-center">
           <MyButton
-            className="mt-4 rounded-3xl bg-orange px-8 py-2 text-xl hover:text-white"
+            className="bg-orange mt-4 rounded-3xl px-8 py-2 text-xl hover:text-white"
             onClick={handleLogout}
           >
             <span>Вихід</span>

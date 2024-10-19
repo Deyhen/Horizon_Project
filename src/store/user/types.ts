@@ -16,9 +16,9 @@ export interface User {
   role: string;
   donateCurrency: number;
   gameCurrency: number;
-  capePath: string;
-  skinPath: string;
-  avatarPath: string;
+  capePath: string | undefined;
+  skinPath: string | undefined;
+  avatarPath: string | undefined;
 }
 export interface UserResponse {
   user: User;

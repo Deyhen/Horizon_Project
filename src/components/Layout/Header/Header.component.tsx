@@ -1,3 +1,5 @@
+'use client';
+
 import Hero from '/public/images/circle.png';
 import Logo from '/public/images/Logo.svg';
 import TelegramLogo from '/public/images/telegramLogo.png';
@@ -6,11 +8,21 @@ import WindowsLogo from '/public/images/windowsLogo.png';
 import LinuxAndAppleLogo from '/public/images/linux&appleLogo.png';
 import NavBar from '../NavBar/NavBar.component';
 import Image from 'next/image';
+import Swal from 'sweetalert2';
 
 export const Header = () => {
   const textShadow = '[text-shadow:_2px_4px_rgb(222,_188,_142)]';
   const button =
     'flex bg-white px-4 py-2 w-full shadow-lg border-orange border-b-2 border-r-2 rounded-3xl mb-4';
+
+  const handleDownload = () => {
+    Swal.fire({
+      title: 'Завантаження поки що недоступне',
+      icon: 'warning',
+      iconColor: '#e77f2a',
+      confirmButtonColor: '#e77f2a',
+    });
+  };
 
   return (
     <header className={`col-span-2 grid-cols-3 grid-rows-[1fr,8rem] gap-4 py-4 md:grid`}>
@@ -39,7 +51,7 @@ export const Header = () => {
         </div>
         <div className="col-span-1 col-start-1 row-start-2 hidden flex-col items-center justify-center self-start md:flex">
           <span className={`text-xl text-white ${textShadow} mb-4`}>ЗАВАНТАЖУЙ ЛАУНЧЕР!</span>
-          <button className={`${button}`}>
+          <button className={`${button}`} onClick={handleDownload}>
             <Image className={`h-16 w-20`} src={WindowsLogo} alt={'Woops'} />
             <span className="w-full text-center text-second">
               Версія для
@@ -47,7 +59,7 @@ export const Header = () => {
               Windows 32/64 bit
             </span>
           </button>
-          <button className={`${button}`}>
+          <button className={`${button}`} onClick={handleDownload}>
             <Image className={`h-16 w-20`} src={LinuxAndAppleLogo} alt={'Woops'} />
             <span className="w-full text-center text-second">
               Версія для

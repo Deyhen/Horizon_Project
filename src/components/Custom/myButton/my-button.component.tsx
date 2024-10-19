@@ -1,18 +1,23 @@
-import { InputHTMLAttributes, ReactElement } from "react";
+import { ButtonHTMLAttributes, ReactElement } from 'react';
 
-interface MyButtonProps{
-    onClick?: () => void;
-    className?: string;
-    children: ReactElement;
+interface MyButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  onClick?: () => void;
+  className?: string;
+  children: ReactElement;
 }
 
-export const MyButton = ({onClick, className, children}: MyButtonProps & InputHTMLAttributes<HTMLButtonElement>) => {
-    return (
-        <button 
-        className={className + ' ' + 'font-bold border-first border-2 hover:border-second hover:bg-second text-first hover:text-white px-2 py-1 transition-all duration-300'}
-        onClick={onClick}
-        >
-            {children}
-        </button>
-    )
-}
+export const MyButton = ({ onClick, className, children, ...props }: MyButtonProps) => {
+  return (
+    <button
+      className={
+        className +
+        ' ' +
+        'border-2 border-first px-2 py-1 font-bold text-first transition-all duration-300 hover:border-second hover:bg-second hover:text-white'
+      }
+      onClick={onClick}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};

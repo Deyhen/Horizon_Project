@@ -4,7 +4,7 @@ import { MyInput } from '@/src/components/Custom/input/myInput.component';
 import { MyButton } from '@/src/components/Custom/myButton/my-button.component';
 import { useAppDispatch } from '@/src/store/store';
 import { checkResetToken, resetPassword } from '@/src/store/user/actions';
-import { ErrorMessage, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
@@ -22,7 +22,6 @@ const RegistrationSchema = object().shape({
     .matches(/^[\p{L}\p{M}\p{Nd}\p{Pc}\p{Join_C}_-]+$/gu, 'Заборонені знаки!')
     .required(),
 });
-
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(true);
@@ -50,7 +49,13 @@ const ResetPassword = () => {
     }
   }, [dispatch, router, token]);
 
-  const handleSubmit = ({newPassword, newPasswordConfirmation}: {newPassword: string, newPasswordConfirmation: string}) => {
+  const handleSubmit = ({
+    newPassword,
+    newPasswordConfirmation,
+  }: {
+    newPassword: string;
+    newPasswordConfirmation: string;
+  }) => {
     if (newPassword === newPasswordConfirmation && token) {
       dispatch(resetPassword({ token: token, password: newPassword }))
         .unwrap()
@@ -81,42 +86,42 @@ const ResetPassword = () => {
   };
 
   return !loading ? (
-    <div className="flex flex-col items-center justify-center rounded-3xl bg-white p-6 mb-24">
+    <div className="mb-24 flex flex-col items-center justify-center rounded-3xl bg-white p-6">
       <h1 className="mx-2 mb-2 text-2xl text-first">Відновлення паролю</h1>
       <Formik
-      initialValues={{
-        password: '',
-        confirmPassword: '',
-          }}
-          validationSchema={RegistrationSchema}
-          onSubmit={(values: {password: string, confirmPassword: string}) => {
-            handleSubmit({ newPassword: values.password, newPasswordConfirmation: values.confirmPassword });
-          }}>
-        {({ errors, touched }) => (
-        <Form>
-          <div className="mt-4 flex flex-col">
-          <MyInput
-            name='password'
-            type="password"
-            placeholder="Уведіть новий пароль"
-            errorStyle="h-8"
- 
-          />
-          <MyInput
-            name="confirmPassword"
-            type="password"
-            placeholder="Повторіть новий пароль"
-            errorStyle="h-8"
-
-          />
-        </div>
-        <MyButton
-        type="submit"
-        className='rounded-xl mt-4 py-2 px-4'
-          >
-        <span>Встановити новий пароль</span>
-        </MyButton>
-        </Form>)}
+        initialValues={{
+          password: '',
+          confirmPassword: '',
+        }}
+        validationSchema={RegistrationSchema}
+        onSubmit={(values: { password: string; confirmPassword: string }) => {
+          handleSubmit({
+            newPassword: values.password,
+            newPasswordConfirmation: values.confirmPassword,
+          });
+        }}
+      >
+        {() => (
+          <Form>
+            <div className="mt-4 flex flex-col">
+              <MyInput
+                name="password"
+                type="password"
+                placeholder="Уведіть новий пароль"
+                errorStyle="h-8"
+              />
+              <MyInput
+                name="confirmPassword"
+                type="password"
+                placeholder="Повторіть новий пароль"
+                errorStyle="h-8"
+              />
+            </div>
+            <MyButton type="submit" className="mt-4 rounded-xl px-4 py-2">
+              <span>Встановити новий пароль</span>
+            </MyButton>
+          </Form>
+        )}
       </Formik>
     </div>
   ) : (
