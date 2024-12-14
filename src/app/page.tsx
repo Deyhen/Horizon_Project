@@ -1,57 +1,56 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { PostBlock } from '../components/PagesBlocks/postBlock.component';
-import { useAppDispatch, useAppSelector } from '../store/store';
-import { getPosts } from '../store/posts/actions';
-import { Loader } from '../components/Custom/loader/loader.component';
+import Image from 'next/image';
+import Hero from '/public/images/MainHero.png';
+import WindowsLogo from '/public/images/WindowsLogo.png';
+import WindowsLogoHovered from '/public/images/WindowsLogoHovered.png';
+import { MyButton } from '../shared/ui/myButton/myButton.component';
+import { useState } from 'react';
 
 const Home = () => {
-  const dispatch = useAppDispatch();
-  const [isVisible, setIsVisible] = useState(false);
-
-  // Fetch posts data on component mount
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch]);
-
-  const loading = useAppSelector((state) => state.posts.loading);
-  const postsData = useAppSelector((state) => state.posts.data);
-
-  // Trigger animation when data is loaded
-  useEffect(() => {
-    if (!loading) {
-      setTimeout(() => {
-        setIsVisible(true);
-      }, 10); // Small delay for smooth animation
-    }
-  }, [loading]);
-
+  const [isHovered, setIsHovered] = useState(false);
   return (
-    <div className="h-full w-3/4 items-center justify-center">
-      {loading ? (
-        <Loader />
-      ) : postsData.length ? (
-        <div
-          className={`flex transform flex-col transition-transform duration-1000 ease-in-out ${
-            isVisible ? 'animate-slide-in' : 'opacity-0'
-          }`}
-        >
-          {postsData.map((item) => (
-            <PostBlock
-              title={item.title}
-              id={item.id}
-              content={item.content}
-              img={item.img}
-              key={item.id}
-            />
-          ))}
+    <div className="flex w-full items-start justify-between pl-40 pr-20">
+      <div className="mt-16 flex flex-col space-y-12 pl-12 pr-40">
+        <span className="flex flex-col space-y-2 text-7xl font-bold text-black">
+          <p>Грайте, творіть,</p>
+          <p>досліджуйте,</p>
+          <p>ідеальний Minecraft</p>
+          <p>сервер з модами!</p>
+        </span>
+        <span className="text-2xl text-gray-400">
+          Відкрийте для себе безмежні можливості для творчості й виживання в унікальному кубічному
+          всесвіті
+        </span>
+        <div>
+          <a href="https://launch.ukraine-horizon.online/Launcher.exe" download>
+            <MyButton
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <div className="flex max-w-fit items-center justify-center space-x-12 rounded-3xl">
+                <span className="jusify-between flex w-full flex-col items-start text-start">
+                  <p className="text-xl">Завантажити лаунчер</p>
+                  <p className="text-start text-second">для Windows 32/64 bit</p>
+                </span>
+                <Image
+                  width={80}
+                  height={60}
+                  src={isHovered ? WindowsLogo : WindowsLogoHovered}
+                  alt={'Woops'}
+                />
+              </div>
+            </MyButton>
+          </a>
         </div>
-      ) : (
-        <div className="rounded-3xl bg-white p-4 text-center text-3xl font-bold text-second">
-          Список постів порожній
-        </div>
-      )}
+      </div>
+      <Image
+        src={Hero}
+        alt="hero"
+        width={940}
+        height={1000}
+        className="z-10 max-h-[90vh] w-auto object-contain"
+      />
     </div>
   );
 };

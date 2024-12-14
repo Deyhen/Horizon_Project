@@ -2,7 +2,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { LoginArgs, RegistrationArgs, UserResponse } from './types';
-import instance from '@/src/shared/api';
+import instance from '@/src/api/api';
 
 export const getUser = createAsyncThunk('get user', async (args, { rejectWithValue }) => {
   try {

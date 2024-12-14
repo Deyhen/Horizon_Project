@@ -1,4 +1,4 @@
-import instance from '@/src/shared/api';
+import instance from '@/src/api/api';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 

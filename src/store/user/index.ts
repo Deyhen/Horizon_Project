@@ -22,7 +22,7 @@ const initialUser: User = {
   email: '',
   password: '',
   isActivated: false,
-  role: 'user',
+  role: '',
   gameCurrency: 0,
   donateCurrency: 0,
   capePath: '',

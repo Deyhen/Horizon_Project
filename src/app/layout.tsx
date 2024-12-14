@@ -1,11 +1,11 @@
-import Footer from '../components/Layout/Footer/Footer.component';
+
 import { Montserrat } from 'next/font/google';
-import StoreProvider from '../components/StoreProvider/storeProvider.component';
+import StoreProvider from '../shared/StoreProvider/storeProvider.component';
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import 'tailwindcss/tailwind.css';
-import { Header } from '../components/Layout/Header/Header.component';
-import { RightBar } from '../components/Layout/RightBar/RightBar.component';
+import { Header } from '../shared/layout/header';
+import { Footer } from '../shared/layout/footer';
 
 // Вызов Montserrat выносим за пределы компонента
 const montserrat = Montserrat({ subsets: ['latin'] });
@@ -22,7 +22,7 @@ const RootLayout = ({
       <StoreProvider>
         <body
           className={
-            `grid grid-cols-[1fr] grid-rows-[15rem,auto,1fr,10rem] md:grid-cols-[1fr,24rem] md:grid-rows-[40rem,1fr,24rem] ` +
+            `flex flex-col ` +
             montserrat.className
           }
         >
@@ -38,10 +38,9 @@ const RootLayout = ({
           {/*<!-- End Google Tag Manager (noscript) -->*/}
 
           <Header />
-          <main className="col-span-2 col-start-1 row-start-3 flex w-full items-start justify-center px-4 md:col-span-1 md:row-start-2 md:mt-24">
+          <main className="">
             {children}
           </main>
-          <RightBar />
           <Footer />
         </body>
       </StoreProvider>

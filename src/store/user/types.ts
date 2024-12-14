@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ThunkCallbacks } from '@/src/shared/createThunkWithCallbacks';
+import { ThunkCallbacks } from '@/src/api/createThunkWithCallbacks';
 
 export interface UserState {
   data: User;

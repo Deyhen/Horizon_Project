@@ -1,4 +1,4 @@
-import { Loader } from '../components/Custom/loader/loader.component';
+import { Loader } from '../shared/ui/loader/loader.component';
 
 const Loading = () => {
   return <Loader />;
