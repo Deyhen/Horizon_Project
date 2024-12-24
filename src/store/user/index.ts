@@ -16,13 +16,26 @@ import {
 } from './actions';
 import { act } from 'react';
 
+// const initialUser: User = {
+//   id: '123',
+//   username: 'test',
+//   email: 'test@test.com',
+//   password: '123',
+//   isActivated: false,
+//   role: 'admin',
+//   gameCurrency: 100,
+//   donateCurrency: 10,
+//   capePath: '',
+//   skinPath: '',
+//   avatarPath: '',
+// };
 const initialUser: User = {
   id: '',
   username: '',
   email: '',
   password: '',
   isActivated: false,
-  role: '',
+  role: 'user',
   gameCurrency: 0,
   donateCurrency: 0,
   capePath: '',
@@ -31,7 +44,7 @@ const initialUser: User = {
 };
 const initialState: UserState = {
   data: initialUser,
-  loading: true,
+  loading: false,
   loginError: '',
   signupError: '',
 };

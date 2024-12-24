@@ -1,0 +1,15 @@
+.navButton {
+  @apply text-text relative flex max-h-fit items-center justify-center py-1 text-2xl font-medium;
+}
+.selectedNav::after {
+  @apply absolute bottom-0 left-1/2 block h-0.5 w-full -translate-x-1/2 bg-secondary;
+  content: '';
+}
+.hoveredNav::after {
+  @apply w-0 origin-center duration-700;
+  content: '';
+}
+.hoveredNav:hover::after {
+  @apply absolute bottom-0 left-1/2 block h-0.5 w-full -translate-x-1/2 bg-secondary;
+  content: '';
+}

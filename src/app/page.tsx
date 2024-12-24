@@ -2,45 +2,37 @@
 
 import Image from 'next/image';
 import Hero from '/public/images/MainHero.png';
-import WindowsLogo from '/public/images/WindowsLogo.png';
-import WindowsLogoHovered from '/public/images/WindowsLogoHovered.png';
-import { MyButton } from '../shared/ui/myButton/myButton.component';
+import { Button } from '../shared/ui/Button/Button.component';
 import { useState } from 'react';
+import { FaWindows } from 'react-icons/fa';
 
 const Home = () => {
-  const [isHovered, setIsHovered] = useState(false);
   return (
-    <div className="flex w-full items-start justify-between pl-40 pr-20">
-      <div className="mt-16 flex flex-col space-y-12 pl-12 pr-40">
-        <span className="flex flex-col space-y-2 text-7xl font-bold text-black">
-          <p>Грайте, творіть,</p>
-          <p>досліджуйте,</p>
-          <p>ідеальний Minecraft</p>
-          <p>сервер з модами!</p>
-        </span>
-        <span className="text-2xl text-gray-400">
-          Відкрийте для себе безмежні можливості для творчості й виживання в унікальному кубічному
-          всесвіті
-        </span>
-        <div>
+    <div className="relative flex w-full items-start justify-between pl-40 pr-20">
+      <div className="mt-24 flex w-1/2 flex-col flex-wrap space-y-24 pl-12 pr-40">
+        <div className="flex flex-col space-y-12">
+          <span className="text-text flex flex-col space-y-2 text-6xl font-bold">
+            <p>Грайте, творіть,</p>
+            <p>досліджуйте,</p>
+            <p>ідеальний Minecraft</p>
+            <p>сервер з модами!</p>
+          </span>
+          <span className="text-2xl text-gray-400">
+            Відкрийте для себе безмежні можливості для творчості й виживання в унікальному кубічному
+            всесвіті
+          </span>
+        </div>
+        <div className="mt-20">
           <a href="https://launch.ukraine-horizon.online/Launcher.exe" download>
-            <MyButton
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              <div className="flex max-w-fit items-center justify-center space-x-12 rounded-3xl">
+            <Button>
+              <div className="flex max-w-fit items-center justify-center space-x-16 rounded-3xl">
                 <span className="jusify-between flex w-full flex-col items-start text-start">
                   <p className="text-xl">Завантажити лаунчер</p>
-                  <p className="text-start text-second">для Windows 32/64 bit</p>
+                  <p className={`text-start text-secondary`}>для Windows 32/64 bit</p>
                 </span>
-                <Image
-                  width={80}
-                  height={60}
-                  src={isHovered ? WindowsLogo : WindowsLogoHovered}
-                  alt={'Woops'}
-                />
+                <FaWindows className="h-24 w-24 duration-300" color="#9124BF" />
               </div>
-            </MyButton>
+            </Button>
           </a>
         </div>
       </div>
@@ -49,7 +41,7 @@ const Home = () => {
         alt="hero"
         width={940}
         height={1000}
-        className="z-10 max-h-[90vh] w-auto object-contain"
+        className="absolute right-20 top-0 z-10 max-h-[90vh] w-auto object-contain"
       />
     </div>
   );

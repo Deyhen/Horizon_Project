@@ -6,5 +6,28 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
+  background-color: black;
+  /* background-image: url('../../public/images/background.jpeg');
+  background-size: cover;
+  background-origin: border-box;
+  background-attachment: fixed;
+  background-repeat: no-repeat; */
+}
+html {
+  scrollbar-gutter: stable;
+}
 
+@layer utilities {
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-text_secondary;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-sm bg-primary;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary;
+  }
 }

@@ -14,9 +14,8 @@ export const findPost = createAsyncThunk(
   'get one nes by id',
   async (id: string, { rejectWithValue }) => {
     try {
-      console.log(id);
       const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/posts/${id}`);
-      console.log(res);
+
       return res;
     } catch (error) {
       return rejectWithValue(error);

@@ -1,7 +1,11 @@
-import { Loader } from '../shared/ui/loader/loader.component';
+import { Loader } from '../shared/ui/Loader/loader.component';
 
 const Loading = () => {
-  return <Loader />;
+  return (
+    <div className="flex grow items-center justify-center">
+      <Loader />
+    </div>
+  );
 };
 
 export default Loading;

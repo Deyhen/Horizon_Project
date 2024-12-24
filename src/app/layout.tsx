@@ -1,11 +1,10 @@
-
 import { Montserrat } from 'next/font/google';
-import StoreProvider from '../shared/StoreProvider/storeProvider.component';
+import StoreProvider from '../modules/StoreProvider/storeProvider.component';
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import 'tailwindcss/tailwind.css';
-import { Header } from '../shared/layout/header';
-import { Footer } from '../shared/layout/footer';
+import { Header } from '../modules/layout/header';
+import { Footer } from '../modules/layout/footer';
 
 // Вызов Montserrat выносим за пределы компонента
 const montserrat = Montserrat({ subsets: ['latin'] });
@@ -20,12 +19,7 @@ const RootLayout = ({
       <GoogleTagManager gtmId="GTM-NLDFQCJH" />
       <GoogleAnalytics gaId="G-HJ6KRNLZR7" />
       <StoreProvider>
-        <body
-          className={
-            `flex flex-col ` +
-            montserrat.className
-          }
-        >
+        <body className={`relative flex min-h-screen flex-col ` + montserrat.className}>
           {/*//<!-- Google Tag Manager (noscript) -->*/}
           <noscript>
             <iframe
@@ -38,9 +32,7 @@ const RootLayout = ({
           {/*<!-- End Google Tag Manager (noscript) -->*/}
 
           <Header />
-          <main className="">
-            {children}
-          </main>
+          <main className="flex grow">{children}</main>
           <Footer />
         </body>
       </StoreProvider>

@@ -1,0 +1,15 @@
+.form {
+  @apply flex w-1/2 flex-col items-center justify-center space-y-8;
+}
+
+.input {
+  @apply px-2 py-1 text-lg;
+}
+
+.inputContainer {
+  @apply space-x-2;
+}
+
+.icon {
+  @apply h-6 w-6;
+}

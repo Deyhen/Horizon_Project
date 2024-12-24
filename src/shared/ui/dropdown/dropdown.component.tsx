@@ -32,7 +32,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect, position 
     <div className="relative inline-block min-w-28 text-left" ref={dropdownRef}>
       <button
         onClick={handleToggle}
-        className="inline-flex w-full justify-center rounded-xl border-2 border-first bg-transparent px-2 py-1 font-semibold text-first transition-all duration-300 hover:border-first hover:bg-first hover:text-white"
+        className="border-primary text-primary hover:border-primary hover:bg-primary inline-flex w-full justify-center rounded-xl border-2 bg-transparent px-2 py-1 font-semibold transition-all duration-300 hover:text-white"
       >
         {label}
         <svg
@@ -66,7 +66,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect, position 
             <a
               key={index}
               onClick={() => handleOptionClick(option)}
-              className="block w-full cursor-pointer px-4 py-2 text-sm font-semibold transition-colors duration-200 hover:bg-first"
+              className="hover:bg-primary block w-full cursor-pointer px-4 py-2 text-sm font-semibold transition-colors duration-200"
             >
               {option}
             </a>

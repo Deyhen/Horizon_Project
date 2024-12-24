@@ -19,11 +19,9 @@ export const login = createAsyncThunk('login', async (data: LoginArgs, { rejectW
       ...data,
     })) as AxiosResponse<UserResponse>;
     localStorage.setItem('accessToken', res.data.accessToken);
-
     return res.data.user;
   } catch (error) {
     const e = error as AxiosError<any>;
-    console.log(e);
     return rejectWithValue(e.response?.data.message);
   }
 });
@@ -39,7 +37,6 @@ export const signup = createAsyncThunk(
       return res.data.user;
     } catch (error) {
       const e = error as AxiosError<any>;
-      console.log(e);
       return rejectWithValue(e.response?.data.message);
     }
   },
@@ -61,7 +58,6 @@ export const checkUser = createAsyncThunk(
       return res.data.user;
     } catch (error) {
       const e = error as AxiosError<any>;
-      console.log(e);
       return rejectWithValue(e.response?.data.message);
     }
   },
@@ -74,7 +70,6 @@ export const forgotPassword = createAsyncThunk(
       return;
     } catch (error) {
       const e = error as AxiosError<any>;
-      console.log(e);
       return rejectWithValue(e.response?.data.message);
     }
   },
@@ -90,7 +85,6 @@ export const checkResetToken = createAsyncThunk(
       return res;
     } catch (error) {
       const e = error as AxiosError<any>;
-      console.log(e);
       return rejectWithValue(e.response?.data.message);
     }
   },
@@ -109,7 +103,6 @@ export const resetPassword = createAsyncThunk(
       return res.data.user;
     } catch (error) {
       const e = error as AxiosError<any>;
-      console.log(e);
       return rejectWithValue(e.response?.data.message);
     }
   },
@@ -125,7 +118,6 @@ export const changeSkin = createAsyncThunk(
       return res;
     } catch (error) {
       const e = error as AxiosError<any>;
-      console.log(e);
       return rejectWithValue(e.response?.data.message);
     }
   },
@@ -147,7 +139,6 @@ export const changeAvatar = createAsyncThunk(
       return res;
     } catch (error) {
       const e = error as AxiosError<any>;
-      console.log(e);
       return rejectWithValue(e.response?.data.message);
     }
   },
@@ -168,7 +159,6 @@ export const changeCape = createAsyncThunk(
       return res;
     } catch (error) {
       const e = error as AxiosError<any>;
-      console.log(e);
       return rejectWithValue(e.response?.data.message);
     }
   },
@@ -181,7 +171,6 @@ export const activateEmail = createAsyncThunk(
       return res;
     } catch (error) {
       const e = error as AxiosError<any>;
-      console.log(e);
       return rejectWithValue(e.response?.data.message);
     }
   },
@@ -197,7 +186,6 @@ export const activatePromocode = createAsyncThunk(
       return res;
     } catch (error) {
       const e = error as AxiosError<any>;
-      console.log(e);
       return rejectWithValue(e.response?.data.message);
     }
   },
@@ -213,7 +201,6 @@ export const changeUsername = createAsyncThunk(
       return res;
     } catch (error) {
       const e = error as AxiosError<any>;
-      console.log(e);
       return rejectWithValue(e.response?.data.message);
     }
   },
@@ -233,7 +220,6 @@ export const changePassword = createAsyncThunk(
       return res;
     } catch (error) {
       const e = error as AxiosError<any>;
-      console.log(e);
       return rejectWithValue(e.response?.data.message);
     }
   },
@@ -257,7 +243,6 @@ export const addPromocodes = createAsyncThunk(
       return res;
     } catch (error) {
       const e = error as AxiosError<any>;
-      console.log(e);
       return rejectWithValue(e.response?.data.message);
     }
   },

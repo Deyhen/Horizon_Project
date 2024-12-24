@@ -12,7 +12,7 @@
     <ul>
         <li><strong>Next.js Framework:</strong> Built with Next.js for server-side rendering (SSR) and static site generation (SSG).</li>
         <li><strong>Redux State Management:</strong> Manages global state with Redux for predictable state management and scalability.</li>
-        <li><strong>Tailwind CSS:</strong> Uses Tailwind for a utility-first, responsive, and mobile-friendly design approach.</li>
+        <li><strong>Tailwind CSS:</strong> Uses Tailwind for a utilityprimary, responsive, and mobile-friendly design approach.</li>
         <li><strong>TypeScript:</strong> Ensures type safety and enhances the developer experience with TypeScript.</li>
         <li><strong>Responsive Design:</strong> Provides a seamless user experience across different screen sizes and devices.</li>
     </ul>
