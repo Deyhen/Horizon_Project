@@ -18,7 +18,7 @@ export const Header = () => {
 
   const user = useAppSelector((state) => state.user.data);
   return (
-    <div className="flex h-[10vh] w-full items-center justify-between border-b-2 border-text_secondary px-12">
+    <div className="flex h-[11vh] w-full items-center justify-between border-b-2 border-text_secondary px-12">
       <NavBar />
       {user.id ? (
         <Link href="/cabinet/profile">

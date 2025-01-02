@@ -2,16 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --tw-shadow-color: rgba(0, 0, 0);
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
   background-color: black;
-  /* background-image: url('../../public/images/background.jpeg');
+  background-image: url('../../public/images/background.jpg');
   background-size: cover;
   background-origin: border-box;
   background-attachment: fixed;
-  background-repeat: no-repeat; */
+  background-repeat: no-repeat;
 }
 html {
   scrollbar-gutter: stable;
@@ -29,5 +33,15 @@ html {
   }
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-primary;
+  }
+
+  .text-shadow-sm {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  .text-shadow-md {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  .text-shadow-lg {
+    text-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
   }
 }

@@ -22,9 +22,10 @@ export const CabinetNavBarItem = ({ href, children }: { href: string; children: 
       <Link href={href} className="">
         <div
           className={clsx(
-            'border-primary text-primary flex origin-right border-b-4 px-4 py-2 text-2xl font-bold transition-all duration-300 hover:scale-110',
+            'flex origin-right border-b-4 border-primary px-4 py-2 text-2xl font-bold transition-all duration-300 hover:scale-110',
             {
-              'scale-110': router === href,
+              'scale-110 text-secondary': router === href,
+              'text-text': !(router === href),
             },
           )}
         >

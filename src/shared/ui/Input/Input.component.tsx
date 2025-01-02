@@ -26,11 +26,12 @@ export const Input = ({
       <div
         className={clsx(
           containerStyle,
-          'flex w-full items-center rounded-2xl border-8 border-double px-2 py-1 transition-colors duration-300',
+          'flex w-full items-center rounded-2xl border-8 border-double bg-black bg-opacity-20 px-2 py-1 transition-colors duration-300',
           {
+            'border-primary text-secondary': isFocused && !(meta.error && meta.touched),
+            'border-text_secondary text-text_secondary':
+              !isFocused && !(meta.error && meta.touched),
             'border-red-600 text-red-600': meta.error && meta.touched,
-            'border-primary text-secondary': isFocused,
-            'border-text_secondary text-text_secondary': !isFocused,
           },
         )}
         // onClick={handleClick}
@@ -45,11 +46,11 @@ export const Input = ({
           onBlur={() => setIsFocused(false)}
           className={clsx(
             inputStyle,
-            `w-full rounded-lg bg-transparent outline-none placeholder:font-normal placeholder:text-text_secondary`,
+            `w-full rounded-lg bg-transparent outline-none placeholder:font-normal`,
             {
+              'placeholder:text-text_secondary': !isFocused && !(meta.error && meta.touched),
+              'placeholder:text-secondary': isFocused && !(meta.error && meta.touched),
               'placeholder:text-red-600': meta.error && meta.touched,
-              'placeholder:text-text_secondary': !isFocused,
-              'placeholder:text-secondary': isFocused,
             },
           )}
           autoComplete="off"

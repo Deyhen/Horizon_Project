@@ -5,7 +5,6 @@ export const CabinetNavbar = () => {
     <div className="flex flex-col space-y-8">
       <CabinetNavBarItem href="/cabinet/profile">Профіль</CabinetNavBarItem>
       <CabinetNavBarItem href="/cabinet/donate">Донат</CabinetNavBarItem>
-      <CabinetNavBarItem href="/cabinet/settings">Налаштування</CabinetNavBarItem>
     </div>
   );
 };

@@ -10,8 +10,8 @@ const Home = () => {
   return (
     <div className="relative flex w-full items-start justify-between pl-40 pr-20">
       <div className="mt-24 flex w-1/2 flex-col flex-wrap space-y-24 pl-12 pr-40">
-        <div className="flex flex-col space-y-12">
-          <span className="text-text flex flex-col space-y-2 text-6xl font-bold">
+        <div className="text-shadow-lg flex flex-col space-y-12">
+          <span className="flex flex-col space-y-2 text-6xl font-bold text-text">
             <p>Грайте, творіть,</p>
             <p>досліджуйте,</p>
             <p>ідеальний Minecraft</p>
@@ -30,7 +30,7 @@ const Home = () => {
                   <p className="text-xl">Завантажити лаунчер</p>
                   <p className={`text-start text-secondary`}>для Windows 32/64 bit</p>
                 </span>
-                <FaWindows className="h-24 w-24 duration-300" color="#9124BF" />
+                <FaWindows className="h-24 w-24" />
               </div>
             </Button>
           </a>
@@ -39,9 +39,9 @@ const Home = () => {
       <Image
         src={Hero}
         alt="hero"
-        width={940}
+        width={920}
         height={1000}
-        className="absolute right-20 top-0 z-10 max-h-[90vh] w-auto object-contain"
+        className="absolute right-20 top-0 z-10 max-h-[89vh] w-auto object-contain"
       />
     </div>
   );

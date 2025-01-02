@@ -9,6 +9,7 @@ import Link from 'next/link';
 import styles from './LoginForm.module.css';
 import { Loader } from '@/src/shared/ui/Loader/loader.component';
 import { useRouter } from 'next/navigation';
+import { Modal } from '@/src/modules/providers';
 
 interface Values {
   username: string;
@@ -49,7 +50,10 @@ export const LoginForm = () => {
       onSubmit={(values: Values) => {
         dispatch(login({ username: values.username, password: values.password }))
           .unwrap()
-          .then(() => router.push('/cabinet/profile'));
+          .then(() => {
+            Modal.closeModal();
+            router.push('/cabinet/profile');
+          });
       }}
     >
       {({ errors, touched }) => (
@@ -85,7 +89,7 @@ export const LoginForm = () => {
               <span>Увійти</span>
             </Button>
             <Link href="/register">
-              <Button className={styles.button}>
+              <Button className={styles.button} onClick={Modal.closeModal}>
                 <span>Реєстрація</span>
               </Button>
             </Link>
@@ -96,14 +100,20 @@ export const LoginForm = () => {
                 if (touched[field as keyof typeof touched]) {
                   return (
                     <ErrorMessage key={field} name={field}>
-                      {(msg) => <div className="text-lg font-semibold text-primary">{msg}</div>}
+                      {(msg) => (
+                        <div className="text-lg font-semibold text-red-600 underline underline-offset-2 shadow-red-600 text-shadow">
+                          {msg}
+                        </div>
+                      )}
                     </ErrorMessage>
                   );
                 }
                 return null;
               })[0]
             }
-            {rejectWith && <span className="text-lg font-semibold text-primary">{rejectWith}</span>}
+            {rejectWith && (
+              <span className="text-lg font-semibold text-red-600 underline">{rejectWith}</span>
+            )}
             {isPending && <Loader />}
           </div>
         </Form>

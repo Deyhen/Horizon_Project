@@ -117,6 +117,12 @@ export const userSlice = createSlice({
     builder.addCase(changeSkin.fulfilled, (state, action) => {
       state.data.skinPath = action.payload.data;
     });
+    builder.addCase(changeCape.rejected, (state, action) => {
+      console.log(action);
+    });
+    builder.addCase(changeSkin.rejected, (state, action) => {
+      console.log(action);
+    });
   },
 });
 

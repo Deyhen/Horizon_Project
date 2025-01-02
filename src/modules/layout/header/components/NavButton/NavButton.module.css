@@ -1,5 +1,10 @@
 .navButton {
-  @apply text-text relative flex max-h-fit items-center justify-center py-1 text-2xl font-medium;
+  @apply text-shadow relative flex max-h-fit items-center justify-center py-1 text-2xl font-medium text-text transition-transform duration-300;
+}
+
+.selectedNav,
+.navButton:hover {
+  @apply scale-110;
 }
 .selectedNav::after {
   @apply absolute bottom-0 left-1/2 block h-0.5 w-full -translate-x-1/2 bg-secondary;

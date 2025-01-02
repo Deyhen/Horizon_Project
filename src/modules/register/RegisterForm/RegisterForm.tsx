@@ -12,6 +12,7 @@ import styles from './RegisterForm.module.css';
 import { useState } from 'react';
 import { AxiosError } from 'axios';
 import { Loader } from '@/src/shared/ui/Loader/loader.component';
+import { Modal } from '../../providers';
 
 const RegistrationSchema = object().shape({
   username: string()
@@ -49,28 +50,6 @@ export const RegisterForm = () => {
   const rejectWith = useAppSelector((state) => state.user.signupError);
   const isPending = useAppSelector((state) => state.user.loading);
 
-  const onSubmit = ({
-    username,
-    password,
-    email,
-  }: {
-    username: string;
-    password: string;
-    email: string;
-  }) => {
-    dispatch(signup({ username: username, password: password, email: email }))
-      .unwrap()
-      .then(() => router.push('/cabinet/profile'));
-    // .then(async () => {
-    //   Swal.fire({
-    //     title: 'Реєстрація успішна\nПідтвердіть ваш email, будь ласка.',
-    //     text: 'Також ви це можеет зробити в будь який момент в особистому кабінеті',
-    //     icon: 'success',
-    //     iconColor: '#e77f2a',
-    //     confirmButtonColor: '#e77f2a',
-    //   }).then(() => router.push('/cabinet/profile'));
-  };
-
   return (
     <Formik
       initialValues={{
@@ -81,11 +60,18 @@ export const RegisterForm = () => {
       }}
       validationSchema={RegistrationSchema}
       onSubmit={(values: Values) => {
-        onSubmit({
-          username: values.username,
-          email: values.email,
-          password: values.password,
-        });
+        dispatch(
+          signup({ username: values.username, password: values.password, email: values.email }),
+        )
+          .unwrap()
+          .then(() => {
+            router.push('/cabinet/profile');
+            Modal.showModal({
+              confirmButton: true,
+              iconType: 'fullfilled',
+              title: 'Посилання для підтвердження вашої електронної адреси надіслано на вашу пошту',
+            });
+          });
       }}
     >
       {({ errors, touched }) => (
@@ -145,7 +131,7 @@ export const RegisterForm = () => {
                 return (
                   <ErrorMessage key={field} name={field}>
                     {(msg) => (
-                      <div className="text-lg font-semibold text-red-600 underline underline-offset-2">
+                      <div className="text-lg font-semibold text-red-600 underline underline-offset-2 shadow-red-600 text-shadow">
                         {msg}
                       </div>
                     )}

@@ -2,16 +2,16 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import styles from './HeaderButton.module.css';
+import styles from './NavButton.module.css';
 import clsx from 'clsx';
 
-interface HeaderbuttonProps {
+interface NavButtonProps {
   title: string;
   className?: string;
   pathname: string;
 }
 
-export const HeaderButton = ({ title, className, pathname }: HeaderbuttonProps) => {
+export const NavButton = ({ title, className, pathname }: NavButtonProps) => {
   const router = usePathname();
 
   return (

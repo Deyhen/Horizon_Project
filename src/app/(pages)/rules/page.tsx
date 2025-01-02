@@ -1,4 +1,4 @@
-import { RuleBlock } from '@/src/modules/RuleBlock';
+import { RuleBlock } from '@/src/modules/rules/RuleBlock';
 
 interface Rule {
   title: string;
@@ -79,7 +79,7 @@ const rules: Rule[] = [
 const Rules = () => {
   return (
     <div className="w-full px-8">
-      <div className="text-text my-8 flex flex-col">
+      <div className="my-8 flex flex-col text-text">
         <span className="py-4 text-4xl font-bold">Community Rules</span>
         <span className="text-xl font-semibold">
           Welcome to our Minecraft Launcher community! To ensure a safe and enjoyable experience for
