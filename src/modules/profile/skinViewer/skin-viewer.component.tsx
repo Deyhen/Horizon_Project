@@ -8,10 +8,10 @@ import { Button } from '@/src/shared/ui/Button/Button.component';
 import { GiCape } from 'react-icons/gi';
 import clsx from 'clsx';
 import { useAppDispatch } from '@/src/store';
-import { changeCape, changeSkin } from '@/src/store/user/actions';
+import { changeCape, changeSkin } from '@/src/api/user/actions';
 import { Modal } from '../../providers';
 
-const MinecraftSkinViewer = ({ user }: { user: User }) => {
+export const MinecraftSkinViewer = ({ user }: { user: User }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [animationPaused, setAnimationPaused] = useState(true);
   const [hideCape, setHideCape] = useState(false);
@@ -89,7 +89,7 @@ const MinecraftSkinViewer = ({ user }: { user: User }) => {
   }, [user.skinPath, hideCape, animationPaused, user.capePath]);
 
   return (
-    <div className="relative flex h-full flex-col justify-end space-y-8 rounded-3xl border border-text_secondary bg-black bg-opacity-40 px-20 py-12">
+    <div className="relative flex h-full flex-col justify-end space-y-8 rounded-3xl border border-text_secondary bg-black bg-opacity-40 px-20 pb-12">
       {animationPaused ? (
         <BsFillPlayFill
           onClick={() => setAnimationPaused((prev) => !prev)}
@@ -145,5 +145,3 @@ const MinecraftSkinViewer = ({ user }: { user: User }) => {
     </div>
   );
 };
-
-export default MinecraftSkinViewer;

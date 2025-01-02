@@ -6,7 +6,7 @@ interface DividerProps {
   className?: string;
 }
 
-const Divider = ({ orientation = 'horizontal', className }: DividerProps) => {
+export const Divider = ({ orientation = 'horizontal', className }: DividerProps) => {
   return (
     <div
       className={clsx('bg-background flex items-center', className, {
@@ -16,5 +16,3 @@ const Divider = ({ orientation = 'horizontal', className }: DividerProps) => {
     />
   );
 };
-
-export default Divider;

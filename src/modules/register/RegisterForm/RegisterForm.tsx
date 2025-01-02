@@ -1,17 +1,12 @@
+import styles from './RegisterForm.module.css';
 import { RiMapPinUserLine, RiLock2Line } from 'react-icons/ri';
-import { Button } from '@/src/shared/ui/Button/Button.component';
+import { Button, Loader, Input } from '@/src/shared/ui';
 import { FiMail } from 'react-icons/fi';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { object, string, ref } from 'yup';
-import { Input } from '@/src/shared/ui/Input/Input.component';
-import Swal from 'sweetalert2';
-import { signup } from '@/src/store/user/actions';
-import { useAppDispatch, useAppSelector } from '@/src/store/store';
+import { signup } from '@/src/api/user/actions';
+import { useAppDispatch, useAppSelector } from '@/src/store';
 import { useRouter } from 'next/navigation';
-import styles from './RegisterForm.module.css';
-import { useState } from 'react';
-import { AxiosError } from 'axios';
-import { Loader } from '@/src/shared/ui/Loader/loader.component';
 import { Modal } from '../../providers';
 
 const RegistrationSchema = object().shape({

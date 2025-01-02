@@ -2,15 +2,14 @@
 
 import Image from 'next/image';
 import Hero from '/public/images/MainHero.png';
-import { Button } from '../shared/ui/Button/Button.component';
-import { useState } from 'react';
+import { Button } from '@/src//shared/ui';
 import { FaWindows } from 'react-icons/fa';
 
 const Home = () => {
   return (
     <div className="relative flex w-full items-start justify-between pl-40 pr-20">
       <div className="mt-24 flex w-1/2 flex-col flex-wrap space-y-24 pl-12 pr-40">
-        <div className="text-shadow-lg flex flex-col space-y-12">
+        <div className="flex flex-col space-y-12 text-shadow-lg">
           <span className="flex flex-col space-y-2 text-6xl font-bold text-text">
             <p>Грайте, творіть,</p>
             <p>досліджуйте,</p>

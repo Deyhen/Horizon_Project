@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { ServersState } from './types';
-import { getGameServers } from './actions';
+import { getGameServers } from '../../api/servers/actions';
 
 const initialState: ServersState = {
   data: [],

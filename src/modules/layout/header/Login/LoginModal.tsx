@@ -1,12 +1,10 @@
 'use client';
 
-import Dialog from '@/src/shared/ui/Dialog/Dialog';
-import { useState } from 'react';
-import { Button } from '@/src/shared/ui/Button/Button.component';
-import { LoginForm } from './LoginForm/LoginForm';
-import Divider from '@/src/shared/ui/Divider/Divider';
 import Link from 'next/link';
-import { useAppSelector } from '@/src/store/store';
+import { useState } from 'react';
+import { Button, Divider } from '@/src/shared/ui';
+import { LoginForm } from './LoginForm/LoginForm';
+import { useAppSelector } from '@/src/store';
 import { Modal } from '@/src/modules/providers';
 
 export const LoginModal = () => {

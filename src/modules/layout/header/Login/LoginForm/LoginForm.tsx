@@ -1,13 +1,11 @@
-import { object, string } from 'yup';
-import { RiMapPinUserLine, RiLock2Line } from 'react-icons/ri';
-import { Input } from '@/src/shared/ui/Input/Input.component';
-import { Button } from '@/src/shared/ui/Button/Button.component';
-import { useAppDispatch, useAppSelector } from '@/src/store/store';
-import { login } from '@/src/store/user/actions';
-import { ErrorMessage, Form, Formik } from 'formik';
 import Link from 'next/link';
 import styles from './LoginForm.module.css';
-import { Loader } from '@/src/shared/ui/Loader/loader.component';
+import { object, string } from 'yup';
+import { RiMapPinUserLine, RiLock2Line } from 'react-icons/ri';
+import { Input, Button, Loader } from '@/src/shared/ui';
+import { useAppDispatch, useAppSelector } from '@/src/store';
+import { login } from '@/src/api';
+import { ErrorMessage, Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
 import { Modal } from '@/src/modules/providers';
 

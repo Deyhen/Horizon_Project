@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { Post, PostsState } from './types';
-import { createPost, deletePost, findPost, getPosts } from './actions';
+import { createPost, deletePost, findPost, getPosts } from '../../api/posts/actions';
 
 const initialCurrentPage: Post = {
   id: '',

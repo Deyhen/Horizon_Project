@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { ReactNode, useRef, useState } from 'react';
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
-import { useAppSelector } from '@/src/store/store';
+import { useAppSelector } from '@/src/store';
 import { BsCheck2Square } from 'react-icons/bs';
 
 interface PrivilegeBlockProps {

@@ -1,11 +1,9 @@
-import { Montserrat } from 'next/font/google';
-
-import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import 'tailwindcss/tailwind.css';
-import { Header } from '../modules/layout';
-import { Footer } from '../modules/layout';
-import { ModalProvider, StoreProvider } from '../modules/providers';
+import { Montserrat } from 'next/font/google';
+import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google';
+import { Header, Footer } from '@/src//modules/layout';
+import { ModalProvider, StoreProvider } from '@/src/modules/providers';
 
 // Вызов Montserrat выносим за пределы компонента
 const montserrat = Montserrat({ subsets: ['latin'] });

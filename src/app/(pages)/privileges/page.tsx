@@ -1,7 +1,7 @@
 'use client';
 
-import { PrivilegeBlock } from '@/src/modules/privileges/privilegeBlock/privilegeBlock';
-import { useAppSelector } from '@/src/store/store';
+import { PrivilegeBlock } from '@/src/modules/privileges';
+import { useAppSelector } from '@/src/store';
 import { IoDiamond } from 'react-icons/io5';
 import { GiSwordsPower } from 'react-icons/gi';
 import { FaPooStorm } from 'react-icons/fa';

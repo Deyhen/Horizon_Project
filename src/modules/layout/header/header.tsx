@@ -2,11 +2,11 @@
 
 import { NavBar } from './NavBar';
 
-import { useAppDispatch, useAppSelector } from '@/src/store/store';
-import { Button } from '@/src/shared/ui/Button/Button.component';
+import { useAppDispatch, useAppSelector } from '@/src/store';
+import { Button } from '@/src/shared/ui';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { checkUser } from '@/src/store/user/actions';
+import { checkUser } from '@/src/api';
 import { LoginModal } from './Login/LoginModal';
 
 export const Header = () => {
@@ -21,7 +21,7 @@ export const Header = () => {
     <div className="flex h-[11vh] w-full items-center justify-between border-b-2 border-text_secondary px-12">
       <NavBar />
       {user.id ? (
-        <Link href="/cabinet/profile">
+        <Link href="/profile">
           <Button>
             <span>Особистий кабінет</span>
           </Button>
