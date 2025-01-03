@@ -1,55 +1,41 @@
 import axios from 'axios';
 
-const instance = axios.create({
-  withCredentials: true,
+const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
+  withCredentials: true,
+  withXSRFToken: true,
+  timeout: 6000,
+  headers: {
+    Accept: 'application/json',
+  },
 });
-instance.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
+
+api.interceptors.request.use((config) => {
+  const accessToken = localStorage.getItem('accessToken');
+  config.headers.Authorization = `Bearer ${accessToken}`;
 
   return config;
 });
 
-axios.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
-  config.headers['Content-Type'] = `application/json`;
+api.interceptors.response.use(
+  async (res) => res,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response && error.response.status === 401 && !originalRequest.isRetry) {
+      originalRequest.isRetry = true;
+      try {
+        const response = await api.get(`/refresh`, {
+          withCredentials: true,
+        });
+        localStorage.setItem('accessToken', response.data.accessToken);
+        return api(originalRequest);
+      } catch (refreshError) {
+        console.error('AUTHORIZATION ERROR:', refreshError);
+        throw refreshError;
+      }
+    }
+    return Promise.reject(error);
+  },
+);
 
-  return config;
-});
-axios.interceptors.request.use((config) => {
-  config.withCredentials = true;
-  return config;
-});
-
-// instance.interceptors.response.use(async(res) => {
-//     const originalRequest = res.request
-//     console.log(res.status);
-//     if(res.status == 401 ){
-//         originalRequest.isRetry = true
-//         try {
-//             const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/refresh`, {withCredentials: true})
-//             console.log(response);
-//             localStorage.setItem('accessToken', response.data.accessToken)
-//             return instance.request(originalRequest)
-//         } catch (error) {
-//             console.log("AUTHORIZATION ERROR");
-//         }
-//     }
-//     return res
-// }, async (error) => {
-//     const originalRequest = error.config
-//     if(error.response.status == 401 && !error.config?.isRetry){
-//         originalRequest.isRetry = true
-//         try {
-//             const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/refresh`, {withCredentials: true})
-//             localStorage.setItem('accessToken', response.data.accessToken)
-//             return instance.request(originalRequest)
-//         } catch (error) {
-//             console.log("AUTHORIZATION ERROR");
-//         }
-
-//     }
-//     throw (error)
-// })
-
-export default instance;
+export default api;

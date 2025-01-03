@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import instance from '../../api/api';
+import api from '../api';
 
 export const getUsers = createAsyncThunk('get users', async () => {
-  const res = await instance.get(`/users`);
+  const res = await api.get(`/users`);
   return res;
 });

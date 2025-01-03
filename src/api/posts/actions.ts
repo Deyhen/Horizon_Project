@@ -1,10 +1,9 @@
-import instance from '@/src/api/api';
+import api from '../api';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 
-export const getPosts = createAsyncThunk('get posts', async (arg, { rejectWithValue }) => {
+export const getPosts = createAsyncThunk('get posts', async (_, { rejectWithValue }) => {
   try {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/posts`);
+    const res = await api.get(`/posts`);
     return res;
   } catch (error) {
     return rejectWithValue(error);
@@ -14,7 +13,7 @@ export const findPost = createAsyncThunk(
   'get one nes by id',
   async (id: string, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/posts/${id}`);
+      const res = await api.get(`/posts/${id}`);
 
       return res;
     } catch (error) {
@@ -26,7 +25,7 @@ export const createPost = createAsyncThunk(
   'create post',
   async (formData: FormData, { rejectWithValue }) => {
     try {
-      const res = await instance.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/posts`, formData);
+      const res = await api.post(`/posts`, formData);
       return res;
     } catch (error) {
       return rejectWithValue(error);
@@ -37,7 +36,7 @@ export const deletePost = createAsyncThunk(
   'delete post',
   async (id: string, { rejectWithValue }) => {
     try {
-      const res = await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/posts/${id}`);
+      const res = await api.delete(`/posts/${id}`);
 
       return res;
     } catch (error) {

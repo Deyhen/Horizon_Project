@@ -1,1 +1,1 @@
-export * from './BalanceBlock.component';
+export * from './BalanceBlock';

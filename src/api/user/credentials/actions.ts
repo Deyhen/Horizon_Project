@@ -1,13 +1,14 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { getUser } from '../auth';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { UserResponse } from '@/src/store/user/types';
+import api from '../../api';
 
 export const forgotPassword = createAsyncThunk(
   'forgot password',
   async (email: string, { rejectWithValue }) => {
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/forgot-password`, { email });
+      await api.post(`/forgot-password`, { email });
       return;
     } catch (error) {
       const e = error as AxiosError<any>;
@@ -20,9 +21,7 @@ export const checkResetToken = createAsyncThunk(
   async (token: string, { rejectWithValue }) => {
     try {
       console.log(token);
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password/chek/${token}`,
-      );
+      const res = await api.get(`/reset-password/chek/${token}`);
       return res;
     } catch (error) {
       const e = error as AxiosError<any>;
@@ -35,7 +34,7 @@ export const resetPassword = createAsyncThunk(
   'reset password',
   async ({ password, token }: { password: string; token: string }, { rejectWithValue }) => {
     try {
-      const res = (await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password/`, {
+      const res = (await api.post(`/reset-password/`, {
         password,
         token,
       })) as AxiosResponse<UserResponse>;
@@ -50,11 +49,13 @@ export const resetPassword = createAsyncThunk(
 );
 export const activateEmail = createAsyncThunk(
   'send email activation code',
-  async (args, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/activate-email`);
+      console.log(123);
+      const res = await api.get(`/activate-email`);
       return res;
     } catch (error) {
+      console.log(123);
       const e = error as AxiosError<any>;
       return rejectWithValue(e.response?.data.message);
     }
@@ -64,7 +65,7 @@ export const changeUsername = createAsyncThunk(
   'set new username',
   async (newUsername: string, { rejectWithValue, dispatch }) => {
     try {
-      const res = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/change-username`, {
+      const res = await api.put(`/change-username`, {
         newUsername,
       });
       dispatch(getUser());
@@ -82,7 +83,7 @@ export const changePassword = createAsyncThunk(
     { rejectWithValue, dispatch },
   ) => {
     try {
-      const res = await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/change-password`, {
+      const res = await api.put(`/change-password`, {
         currentPassword,
         newPassword,
       });

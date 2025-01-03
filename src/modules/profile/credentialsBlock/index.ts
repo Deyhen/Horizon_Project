@@ -1,1 +1,1 @@
-export * from './CredentialsBlock.component';
+export * from './CredentialsBlock';

@@ -11,7 +11,7 @@ import { Button } from '@/src/shared/ui';
 
 type ModalOptions = {
   title?: string;
-  iconType?: 'fullfilled' | 'reject' | 'pending';
+  iconType?: 'fullfilled' | 'rejected' | 'pending';
   onClose?: () => void;
   confirmButton?: boolean;
   confirmContent?: string;
@@ -28,7 +28,7 @@ export const ModalProvider = () => {
         return <IoCheckmarkCircleSharp size={128} className="text-green-500" />;
       case 'pending':
         return <IoEllipsisHorizontalCircleSharp size={128} className="text-yellow-500" />;
-      case 'reject':
+      case 'rejected':
         return <IoCloseCircleSharp size={128} className="text-red-500" />;
       default:
         return null;

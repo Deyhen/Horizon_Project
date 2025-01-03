@@ -1,5 +1,5 @@
+import { ImSpinner9 } from 'react-icons/im';
+
 export const Loader = () => {
-  return (
-    <div className="h-12 w-12 animate-spin rounded-full border-b-4 border-l-4 border-t-4 border-primary" />
-  );
+  return <ImSpinner9 className={'h-12 w-12 animate-spin text-primary'} />;
 };

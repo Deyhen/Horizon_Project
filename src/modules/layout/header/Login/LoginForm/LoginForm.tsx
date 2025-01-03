@@ -9,11 +9,6 @@ import { ErrorMessage, Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
 import { Modal } from '@/src/modules/providers';
 
-interface Values {
-  username: string;
-  password: string;
-}
-
 const LoginSchema = object().shape({
   username: string()
     .min(4, 'Логін ззанадто короткий')
@@ -50,7 +45,7 @@ export const LoginForm = () => {
           .unwrap()
           .then(() => {
             Modal.closeModal();
-            router.push('/cabinet/profile');
+            router.push('/profile');
           });
       }}
     >
@@ -93,7 +88,11 @@ export const LoginForm = () => {
             </Link>
           </div>
           <div className="flex h-8 items-center justify-center">
-            {
+            {isPending ? (
+              <Loader />
+            ) : rejectWith ? (
+              <div className="text-sm font-medium text-red-600">{rejectWith}</div>
+            ) : (
               Object.keys(errors).map((field) => {
                 if (touched[field as keyof typeof touched]) {
                   return (
@@ -108,11 +107,7 @@ export const LoginForm = () => {
                 }
                 return null;
               })[0]
-            }
-            {rejectWith && (
-              <span className="text-lg font-semibold text-red-600 underline">{rejectWith}</span>
             )}
-            {isPending && <Loader />}
           </div>
         </Form>
       )}

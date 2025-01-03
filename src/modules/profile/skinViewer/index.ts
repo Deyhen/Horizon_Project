@@ -1,1 +1,1 @@
-export * from './skin-viewer.component';
+export * from './SkinViewer';

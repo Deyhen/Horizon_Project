@@ -8,7 +8,7 @@ import { Button } from '@/src/shared/ui/Button/Button.component';
 import { GiCape } from 'react-icons/gi';
 import clsx from 'clsx';
 import { useAppDispatch } from '@/src/store';
-import { changeCape, changeSkin } from '@/src/api/user/actions';
+import { changeCape, changeSkin } from '@/src/api';
 import { Modal } from '../../providers';
 
 export const MinecraftSkinViewer = ({ user }: { user: User }) => {

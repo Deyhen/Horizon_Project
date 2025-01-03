@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useRef, useEffect } from 'react';
 
 interface DropdownProps {
@@ -32,7 +34,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect, position 
     <div className="relative inline-block min-w-28 text-left" ref={dropdownRef}>
       <button
         onClick={handleToggle}
-        className="border-primary text-primary hover:border-primary hover:bg-primary inline-flex w-full justify-center rounded-xl border-2 bg-transparent px-2 py-1 font-semibold transition-all duration-300 hover:text-white"
+        className="inline-flex w-full justify-center rounded-xl border-2 border-primary bg-transparent px-2 py-1 font-semibold text-primary transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white"
       >
         {label}
         <svg
@@ -58,7 +60,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect, position 
           position === 'top' ? 'bottom-full mb-2' : 'top-full mt-1'
         } left-0 w-full transform transition-all duration-200 ${
           isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'
-        } z-10 rounded-md bg-third text-white shadow-lg`}
+        } bg-third z-10 rounded-md text-white shadow-lg`}
         style={{ transformOrigin: 'top' }} // Ensures animation originates from the top
       >
         <div className="rounded-xl text-center">
@@ -66,7 +68,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect, position 
             <a
               key={index}
               onClick={() => handleOptionClick(option)}
-              className="hover:bg-primary block w-full cursor-pointer px-4 py-2 text-sm font-semibold transition-colors duration-200"
+              className="block w-full cursor-pointer px-4 py-2 text-sm font-semibold transition-colors duration-200 hover:bg-primary"
             >
               {option}
             </a>

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useRef, useEffect } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import { useClickOutside } from '../../utilities/useClickOutside';

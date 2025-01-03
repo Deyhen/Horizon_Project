@@ -1,1 +1,1 @@
-export * from './privilegeBlock.component';
+export * from './PrivilegeBlock';

@@ -1,1 +1,1 @@
-export * from './ModalProvider.component';
+export * from './ModalProvider';

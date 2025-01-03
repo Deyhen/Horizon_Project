@@ -1,7 +1,15 @@
 import { Button } from '@/src/shared/ui';
 import { User } from '@/src/store/user/types';
+import { ChangePasswordForm } from './ChangePasswordForm';
+import { Modal } from '../../providers';
 
 export const CredentialsBlock = ({ user }: { user: User }) => {
+  const handleChangePassword = () => {
+    Modal.showModal({
+      title: 'Зміна паролю',
+      body: <ChangePasswordForm />,
+    });
+  };
   return (
     <div className="flex w-full flex-col divide-y divide-text_secondary rounded-3xl border border-text_secondary bg-black bg-opacity-40 text-lg">
       <div className="flex items-center space-x-32 px-8 py-4 text-text">
@@ -16,7 +24,7 @@ export const CredentialsBlock = ({ user }: { user: User }) => {
           <span>Password:</span>
           <span className="text-xl font-semibold text-secondary">***********</span>
         </div>
-        <Button className="!px-4 !py-1 !text-base">
+        <Button className="!px-4 !py-1 !text-base" onClick={handleChangePassword}>
           <span>Змінити</span>
         </Button>
       </div>

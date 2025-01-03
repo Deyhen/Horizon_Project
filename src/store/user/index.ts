@@ -4,17 +4,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { User, UserState } from './types';
 import {
+  login,
+  signup,
   changeAvatar,
   changeCape,
   changeSkin,
+  changePassword,
   checkUser,
-  getUser,
-  login,
   logout,
   resetPassword,
-  signup,
-} from './actions';
-import { act } from 'react';
+  getUser,
+} from '@/src/api';
 
 // const initialUser: User = {
 //   id: '123',
@@ -105,8 +105,16 @@ export const userSlice = createSlice({
     builder.addCase(resetPassword.rejected, (state, action) => {
       console.log(action.error);
     });
+    builder.addCase(getUser.pending, (state, action) => {
+      state.loading = true;
+    });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.data = action.payload.data as User;
+      state.loading = false;
+    });
+    builder.addCase(getUser.rejected, (state, action) => {
+      console.log(action.error);
+      state.loading = false;
     });
     builder.addCase(changeAvatar.fulfilled, (state, action) => {
       state.data.avatarPath = action.payload.data;

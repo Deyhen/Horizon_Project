@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { getUser } from '../user';
+import api from '../api';
 
 export const addPromocodes = createAsyncThunk(
   'add new promocodes',
@@ -15,7 +16,7 @@ export const addPromocodes = createAsyncThunk(
   ) => {
     try {
       const payload = { name, gameCurrencyBonus, donateCurrencyBonus, amount };
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/add-promocodes`, {
+      const res = await api.post(`/add-promocodes`, {
         payload,
       });
       return res;
@@ -29,9 +30,7 @@ export const activatePromocode = createAsyncThunk(
   'activate promocode',
   async (promocode: string, { rejectWithValue, dispatch }) => {
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/activate-promocode/${promocode}`,
-      );
+      const res = await api.get(`/activate-promocode/${promocode}`);
       dispatch(getUser());
       return res;
     } catch (error) {

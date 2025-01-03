@@ -1,3 +1,5 @@
+'use client';
+
 import { useField } from 'formik';
 import { InputHTMLAttributes, useRef, useState } from 'react';
 import clsx from 'clsx';

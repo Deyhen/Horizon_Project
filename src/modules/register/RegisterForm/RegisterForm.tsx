@@ -2,9 +2,9 @@ import styles from './RegisterForm.module.css';
 import { RiMapPinUserLine, RiLock2Line } from 'react-icons/ri';
 import { Button, Loader, Input } from '@/src/shared/ui';
 import { FiMail } from 'react-icons/fi';
-import { ErrorMessage, Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik, FormikErrors } from 'formik';
 import { object, string, ref } from 'yup';
-import { signup } from '@/src/api/user/actions';
+import { signup } from '@/src/api';
 import { useAppDispatch, useAppSelector } from '@/src/store';
 import { useRouter } from 'next/navigation';
 import { Modal } from '../../providers';
@@ -119,8 +119,11 @@ export const RegisterForm = () => {
               <span>Зареєструватись</span>
             </Button>
           </div>
-
-          {
+          {isPending ? (
+            <Loader />
+          ) : rejectWith ? (
+            <div className="text-lg font-medium text-red-600">{rejectWith}</div>
+          ) : (
             Object.keys(errors).map((field) => {
               if (touched[field as keyof typeof touched]) {
                 return (
@@ -135,11 +138,7 @@ export const RegisterForm = () => {
               }
               return null;
             })[0]
-          }
-          {rejectWith && (
-            <span className="text-lg font-semibold text-red-600 underline">{rejectWith}</span>
           )}
-          {isPending && <Loader />}
         </Form>
       )}
     </Formik>

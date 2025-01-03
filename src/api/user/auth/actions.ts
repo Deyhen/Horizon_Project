@@ -1,10 +1,11 @@
 import { LoginArgs, RegistrationArgs, UserResponse } from '@/src/store/user/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
+import api from '../../api';
 
 export const getUser = createAsyncThunk('get user', async (args, { rejectWithValue }) => {
   try {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/user`);
+    const res = await api.get(`/users/user`);
     return res;
   } catch (error) {
     return rejectWithValue(error);
@@ -13,7 +14,7 @@ export const getUser = createAsyncThunk('get user', async (args, { rejectWithVal
 
 export const login = createAsyncThunk('login', async (data: LoginArgs, { rejectWithValue }) => {
   try {
-    const res = (await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/login`, {
+    const res = (await api.post(`/login`, {
       ...data,
     })) as AxiosResponse<UserResponse>;
     localStorage.setItem('accessToken', res.data.accessToken);
@@ -28,7 +29,7 @@ export const signup = createAsyncThunk(
   'signup',
   async (data: RegistrationArgs, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/registration`, {
+      const res = await api.post(`/registration`, {
         ...data,
       });
       localStorage.setItem('accessToken', res.data.accessToken);
@@ -41,7 +42,7 @@ export const signup = createAsyncThunk(
 );
 export const logout = createAsyncThunk('logout', async (arg, { rejectWithValue }) => {
   try {
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/logout`);
+    const res = await api.post(`/logout`);
     return res;
   } catch (error) {
     return rejectWithValue(error);
@@ -51,7 +52,7 @@ export const checkUser = createAsyncThunk(
   'check authorization',
   async (arg, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/refresh`);
+      const res = await api.get(`/refresh`);
       localStorage.setItem('accessToken', res.data.accessToken);
       return res.data.user;
     } catch (error) {

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { UsersState } from './types';
 import { RootState } from '../store';
-import { getUsers } from './actions';
+import { getUsers } from '@/src/api';
 
 const initialState: UsersState = {
   data: [],

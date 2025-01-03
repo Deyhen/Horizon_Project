@@ -6,14 +6,14 @@ import { useAppDispatch, useAppSelector } from '@/src/store';
 import { Button } from '@/src/shared/ui';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { checkUser } from '@/src/api';
+import { checkUser, getUser } from '@/src/api';
 import { LoginModal } from './Login/LoginModal';
 
 export const Header = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(checkUser());
+    dispatch(getUser());
   }, []);
 
   const user = useAppSelector((state) => state.user.data);

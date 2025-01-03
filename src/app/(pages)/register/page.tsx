@@ -2,7 +2,7 @@
 
 import { useAppSelector } from '@/src/store';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Hero from '/public/images/MainHero.png';
 import { RegisterForm } from '@/src/modules/register';
@@ -14,16 +14,18 @@ const RegistrationPage = () => {
 
   const user = useAppSelector((state) => state.user.data);
   const loading = useAppSelector((state) => state.user.loading);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    if (user.id) {
+    setIsMounted(true);
+    if (user?.id) {
       router.push('/');
     }
-  });
+  }, [user, router]);
 
-  if (loading) {
+  if (!isMounted || loading) {
     return (
-      <div className="flex h-[89vh] w-full items-center justify-center">
+      <div className="flex h-[75vh] w-full items-center justify-center">
         <Loader />
       </div>
     );
@@ -35,6 +37,7 @@ const RegistrationPage = () => {
         Ця сторінка недоступна зареєстрованим користувачам
       </div>
     );
+  } else {
   }
 
   return (

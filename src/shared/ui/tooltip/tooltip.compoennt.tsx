@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 
 interface TooltipProps {
@@ -37,7 +39,7 @@ const Tooltip: React.FC<TooltipProps> = ({ text, children, position }) => {
 
       {isVisible && (
         <div
-          className={`absolute ${positionClass} w-max rounded-md bg-fourth p-2 text-sm text-white shadow-lg`}
+          className={`absolute ${positionClass} bg-fourth w-max rounded-md p-2 text-sm text-white shadow-lg`}
         >
           {text}
         </div>
