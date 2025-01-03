@@ -4,10 +4,13 @@ import { Button, Input, Loader } from '@/src/shared/ui';
 import { useAppDispatch } from '@/src/store';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { useState } from 'react';
-import { object, string } from 'yup';
+import { number, object, string } from 'yup';
 
-const ChangePasswordSchema = object().shape({
-  promocode: string().required("Промокод є обов'язковим полем"),
+const AddNewPromocodesSchema = object().shape({
+  name: string().required("Name є обов'язковим полем"),
+  gameCurrencyBonus: number().min(0).required("GameCurrencyBonus є обов'язковим полем"),
+  donateCurrencyBonus: number().min(0).required("DonateCurrencyBonus є обов'язковим полем"),
+  amount: number().min(1).required("Amount є обов'язковим полем"),
 });
 
 interface Values {
@@ -30,7 +33,7 @@ export const AddNewPromocodesForm = () => {
         donateCurrencyBonus: 0,
         amount: 0,
       }}
-      validationSchema={ChangePasswordSchema}
+      validationSchema={AddNewPromocodesSchema}
       onSubmit={(values: Values) => {
         setIsPending(true);
         dispatch(
@@ -58,23 +61,19 @@ export const AddNewPromocodesForm = () => {
     >
       {({ errors, touched }) => (
         <Form className="mt-12 flex w-full min-w-72 flex-col items-center justify-center space-y-12">
-          <div className="flex flex-col items-center justify-center space-y-4">
-            <div className="text-pimary flex items-center justify-center space-x-2 text-xl">
-              <span>Назва промокоду</span>
-              <Input name="name" type="text" placeholder="HJ#9X2" errorStyle="hidden" />
-            </div>
-            <div className="text-pimary flex items-center justify-center space-x-2 text-xl">
-              <span>Кількість</span>
-              <Input name="amount" type="number" placeholder="0" errorStyle="hidden" />
-            </div>
-            <div className="text-pimary flex items-center justify-center space-x-2 text-xl">
-              <span>Бонус в ігровій валюті</span>
-              <Input name="gameCurrencyBonus" type="number" placeholder="0" errorStyle="hidden" />
-            </div>
-            <div className="text-pimary flex items-center justify-center space-x-2 text-xl">
-              <span>Бонус в донатній валюті</span>
-              <Input name="donateCurrencyBonus" type="number" placeholder="0" errorStyle="hidden" />
-            </div>
+          <div className="flex flex-col items-center justify-between space-y-4">
+            <FormLine label="Назва промокоду" inputName="name" inputType="text" />
+            <FormLine label="Кількість" inputName="amount" inputType="number" />
+            <FormLine
+              label="Бонус в ігровій валюті"
+              inputName="gameCurrencyBonus"
+              inputType="text"
+            />
+            <FormLine
+              label="Бонус в донатній валюті"
+              inputName="donateCurrencyBonus"
+              inputType="number"
+            />
           </div>
 
           <div className="flex flex-col items-center justify-center space-y-2">
@@ -107,5 +106,28 @@ export const AddNewPromocodesForm = () => {
         </Form>
       )}
     </Formik>
+  );
+};
+
+const FormLine = ({
+  label,
+  inputName,
+  inputType,
+}: {
+  label: string;
+  inputName: string;
+  inputType: string;
+}) => {
+  return (
+    <div className="flex w-full items-center justify-between space-x-8">
+      <span className="min-w-fit text-xl text-text_secondary">{label}</span>
+      <Input
+        containerStyle="!w-32"
+        inputStyle="text-lg"
+        name={inputName}
+        type={inputType}
+        errorStyle="hidden"
+      />
+    </div>
   );
 };

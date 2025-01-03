@@ -6,7 +6,7 @@ import { ErrorMessage, Form, Formik } from 'formik';
 import { useState } from 'react';
 import { object, string } from 'yup';
 
-const ChangePasswordSchema = object().shape({
+const ActivatePromocodeSchema = object().shape({
   promocode: string().required("Промокод є обов'язковим полем"),
 });
 
@@ -24,7 +24,7 @@ export const ActivatePromocodeForm = () => {
       initialValues={{
         promocode: '',
       }}
-      validationSchema={ChangePasswordSchema}
+      validationSchema={ActivatePromocodeSchema}
       onSubmit={(values: Values) => {
         setIsPending(true);
         dispatch(activatePromocode(values.promocode))
@@ -44,8 +44,14 @@ export const ActivatePromocodeForm = () => {
       }}
     >
       {({ errors, touched }) => (
-        <Form className="mt-12 flex w-full min-w-72 flex-col items-center justify-center space-y-12">
-          <Input name="promocode" type="text" placeholder="HJ#9X2" errorStyle="hidden" />
+        <Form className="mt-12 flex w-full min-w-[22rem] flex-col items-center justify-center space-y-12">
+          <Input
+            name="promocode"
+            type="text"
+            placeholder="HJ#9X2"
+            errorStyle="hidden"
+            inputStyle="px-2 py-1 text-xl text-center"
+          />
 
           <div className="flex flex-col items-center justify-center space-y-3">
             <Button type="submit">Використати</Button>
