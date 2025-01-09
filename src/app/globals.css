@@ -45,3 +45,10 @@ html {
     text-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
   }
 }
+@layer base {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

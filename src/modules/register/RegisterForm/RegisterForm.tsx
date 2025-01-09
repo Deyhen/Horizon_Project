@@ -8,6 +8,7 @@ import { signup } from '@/src/api';
 import { useAppDispatch, useAppSelector } from '@/src/store';
 import { useRouter } from 'next/navigation';
 import { Modal } from '../../providers';
+import { filterFormErrors } from '@/src/shared/utilities';
 
 const RegistrationSchema = object().shape({
   username: string()
@@ -49,8 +50,8 @@ export const RegisterForm = () => {
     <Formik
       initialValues={{
         username: '',
-        password: '',
         email: '',
+        password: '',
         confirmPassword: '',
       }}
       validationSchema={RegistrationSchema}
@@ -75,20 +76,20 @@ export const RegisterForm = () => {
             maxLength={20}
             inputStyle={styles.input}
             containerStyle={styles.inputContainer}
+            onFocus={() => console.log(errors, touched)}
             type="text"
             placeholder="Логін"
             name="username"
-            errorStyle="hidden"
             icon={<RiMapPinUserLine className={styles.icon} />}
           />
           <Input
             maxLength={25}
             inputStyle={styles.input}
             containerStyle={styles.inputContainer}
+            onFocus={() => console.log(errors, touched)}
             type="email"
             placeholder="email@email.com"
             name="email"
-            errorStyle="hidden"
             icon={<FiMail className={styles.icon} />}
           />
 
@@ -96,11 +97,10 @@ export const RegisterForm = () => {
             maxLength={25}
             inputStyle={styles.input}
             containerStyle={styles.inputContainer}
+            onFocus={() => console.log(errors, touched)}
             type="password"
             placeholder="Пароль"
             name="password"
-            label=""
-            errorStyle="hidden"
             icon={<RiLock2Line className={styles.icon} />}
           />
           <Input
@@ -110,8 +110,6 @@ export const RegisterForm = () => {
             type="password"
             placeholder="Повторіть пароль"
             name="confirmPassword"
-            label=""
-            errorStyle="hidden"
             icon={<RiLock2Line className={styles.icon} />}
           />
           <div className="pt-4">
@@ -124,20 +122,7 @@ export const RegisterForm = () => {
           ) : rejectWith ? (
             <div className="text-lg font-medium text-red-600">{rejectWith}</div>
           ) : (
-            Object.keys(errors).map((field) => {
-              if (touched[field as keyof typeof touched]) {
-                return (
-                  <ErrorMessage key={field} name={field}>
-                    {(msg) => (
-                      <div className="text-lg font-semibold text-red-600 underline underline-offset-2 shadow-red-600 text-shadow">
-                        {msg}
-                      </div>
-                    )}
-                  </ErrorMessage>
-                );
-              }
-              return null;
-            })[0]
+            filterFormErrors(errors, touched)
           )}
         </Form>
       )}

@@ -21,7 +21,12 @@ api.interceptors.response.use(
   async (res) => res,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response && error.response.status === 401 && !originalRequest.isRetry) {
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest.isRetry &&
+      error.config.url !== '/refresh'
+    ) {
       originalRequest.isRetry = true;
       try {
         const response = await api.get(`/refresh`, {

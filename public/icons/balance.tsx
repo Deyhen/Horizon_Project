@@ -2,7 +2,6 @@ export const BalanceIcon = ({
   fill,
   width,
   height,
-  strokeWidth,
 }: {
   fill?: string;
   width?: string;

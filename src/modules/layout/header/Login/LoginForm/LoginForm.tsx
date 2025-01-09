@@ -8,6 +8,7 @@ import { login } from '@/src/api';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { useRouter } from 'next/navigation';
 import { Modal } from '@/src/modules/providers';
+import { filterFormErrors } from '@/src/shared/utilities';
 
 const LoginSchema = object().shape({
   username: string()
@@ -58,7 +59,6 @@ export const LoginForm = () => {
             type="text"
             placeholder="Логін"
             name="username"
-            errorStyle="hidden"
             icon={<RiMapPinUserLine className={styles.inputIcon} />}
           />
           <Input
@@ -68,8 +68,6 @@ export const LoginForm = () => {
             type="password"
             placeholder="Пароль"
             name="password"
-            label=""
-            errorStyle="hidden"
             icon={<RiLock2Line className={styles.inputIcon} />}
           />
           <div className="flex w-full justify-end">
@@ -93,20 +91,7 @@ export const LoginForm = () => {
             ) : rejectWith ? (
               <div className="text-sm font-medium text-red-600">{rejectWith}</div>
             ) : (
-              Object.keys(errors).map((field) => {
-                if (touched[field as keyof typeof touched]) {
-                  return (
-                    <ErrorMessage key={field} name={field}>
-                      {(msg) => (
-                        <div className="text-lg font-semibold text-red-600 underline underline-offset-2 shadow-red-600 text-shadow">
-                          {msg}
-                        </div>
-                      )}
-                    </ErrorMessage>
-                  );
-                }
-                return null;
-              })[0]
+              filterFormErrors(errors, touched)
             )}
           </div>
         </Form>

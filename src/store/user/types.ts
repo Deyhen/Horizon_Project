@@ -14,6 +14,7 @@ export interface User {
   email: string;
   isActivated: boolean;
   role: string;
+  privilege: 'User' | 'Vip' | 'Deluxe' | 'God';
   donateCurrency: number;
   gameCurrency: number;
   capePath: string | undefined;
